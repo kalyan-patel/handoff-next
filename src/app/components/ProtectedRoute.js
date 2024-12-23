@@ -13,5 +13,5 @@ export default function ProtectedRoute({ children }) {
   }
 
   // If logged in, render the protected content
-  return <>{children}</>;
+  return <>{children}</>
 }

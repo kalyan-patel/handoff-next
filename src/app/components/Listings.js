@@ -1,11 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const Listings = () => {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const router = useRouter();
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -41,7 +44,8 @@ const Listings = () => {
         {listings.map((listing) => (
           <div
             key={listing._id}
-            className="border rounded-lg shadow-md overflow-hidden"
+            className="border rounded-lg shadow-md overflow-hidden cursor-pointer"
+            onClick={() => router.push(`/listings/${listing._id}`)}
           >
             {/* Check if the image path exists and render a fallback image */}
             <img

@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../../../contexts/AuthContext";
 import { uploadToCloudinary } from "../../../../../lib/cloudinary";
-import ProtectedRoute from "@/app/components/ProtectedRoute";
 
 export default function EditListing({ params }) {
   const { id } = React.use(params);
@@ -73,6 +72,7 @@ export default function EditListing({ params }) {
         user: currentUser.email,
         imgUrls: [...images, ...uploadedImageUrls],
         thumbnailUrl: uploadedImageUrls[thumbnailIndex] || images[thumbnailIndex],
+        lastUpdated: Date.now(),
       };
 
       const response = await fetch(`/api/listings/${id}`, {

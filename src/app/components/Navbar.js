@@ -18,6 +18,10 @@ export default function Navbar() {
 
   return (
     <nav style={{ padding: "1rem", backgroundColor: "#f8f9fa", borderBottom: "1px solid #ddd" }}>
+      <button onClick={() => router.push("/")}>
+        <h2>HANDOFF</h2>
+      </button>
+
       <p>
         {currentUser
           ? `Logged in as: ${currentUser.displayName || "Anonymous"}`
