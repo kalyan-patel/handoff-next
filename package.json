@@ -9,9 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "bootstrap": "^5.3.3",
+    "cloudinary": "^2.5.1",
+    "firebase": "^11.1.0",
+    "formidable": "^3.5.2",
+    "mongoose": "^8.9.2",
+    "next": "15.1.2",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "next": "15.1.2"
+    "react-bootstrap": "^2.10.7",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "postcss": "^8",
