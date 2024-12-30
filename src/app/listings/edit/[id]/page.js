@@ -37,8 +37,7 @@ export default function EditListing({ params }) {
     fetchListingData();
   }, [id]);
 
-
-  if (!currentUser || listingData && listingData.user !== currentUser.email) {
+  if (!currentUser || (listingData && listingData.user !== currentUser.email)) {
     return <div>You are not the owner of this listing.</div>;
   }
 
@@ -93,6 +92,31 @@ export default function EditListing({ params }) {
     }
   };
 
+  const handleMarkAsResolved = async () => {
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await fetch(`/api/listings/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          isResolved: true,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to mark the listing as resolved.");
+      }
+
+      router.push(`/listings/${id}`);
+    } catch (err) {
+      setError("Failed to mark as resolved. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleDelete = async () => {
     setLoading(true);
     setError("");
@@ -117,7 +141,6 @@ export default function EditListing({ params }) {
       setLoading(false);
     }
   };
-
 
   if (!listingData) return <div>Loading...</div>;
 
@@ -220,6 +243,13 @@ export default function EditListing({ params }) {
           </button>
         </form>
         <button
+          onClick={handleMarkAsResolved}
+          disabled={loading}
+          className="w-full py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-600 mt-4"
+        >
+          {loading ? "Marking..." : "Mark as Resolved"}
+        </button>
+        <button
           onClick={handleDelete}
           disabled={loading}
           className="w-full py-2 bg-red-500 text-white font-semibold rounded hover:bg-red-600 mt-4"
@@ -228,6 +258,5 @@ export default function EditListing({ params }) {
         </button>
       </div>
     </div>
-
   );
 }

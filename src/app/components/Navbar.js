@@ -17,7 +17,16 @@ export default function Navbar() {
   };
 
   return (
-    <nav style={{ padding: "1rem", backgroundColor: "#f8f9fa", borderBottom: "1px solid #ddd" }}>
+    <nav
+      style={{
+        position: "sticky",
+        top: "0",
+        zIndex: "1000",
+        padding: "1rem",
+        backgroundColor: "#f8f9fa",
+        borderBottom: "1px solid #ddd",
+      }}
+    >
       <button onClick={() => router.push("/")}>
         <h2>HANDOFF</h2>
       </button>
@@ -26,13 +35,12 @@ export default function Navbar() {
         {currentUser
           ? `Logged in as: ${currentUser.displayName || "Anonymous"}`
           : "Guest"}
-      
-        {/* Conditionally render the logout button */}
+
         {currentUser && (
           <button onClick={handleLogout} style={{ padding: "0.5rem 1rem", cursor: "pointer" }}>
             Logout
           </button>
-      )}
+        )}
       </p>
     </nav>
   );
