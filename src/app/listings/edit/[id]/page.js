@@ -97,7 +97,7 @@ export default function EditListing({ params }) {
     setError("");
 
     try {
-      const response = await fetch(`/api/listings/${id}`, {
+      const response = await fetch(`/api/listings/${id}/resolve`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

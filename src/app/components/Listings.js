@@ -44,15 +44,22 @@ const Listings = () => {
         {listings.map((listing) => (
           <div
             key={listing._id}
-            className="border rounded-lg shadow-md overflow-hidden cursor-pointer"
+            className="relative border rounded-lg shadow-md overflow-hidden cursor-pointer"
             onClick={() => router.push(`/listings/${listing._id}`)}
           >
-            {/* Check if the image path exists and render a fallback image */}
-            <img
-              src={listing.thumbnailUrl || "/images/fallback-image.jpg"}
-              alt={listing.title}
-              className="w-full h-48 object-cover"
-            />
+            {/* Thumbnail with conditional overlay */}
+            <div className="relative">
+              <img
+                src={listing.thumbnailUrl || "/images/fallback-image.jpg"}
+                alt={listing.title}
+                className="w-full h-48 object-cover"
+              />
+              {listing.resolved && (
+                <div className="absolute inset-0 bg-red-600 bg-opacity-50 flex justify-center items-center">
+                  <span className="text-white text-2xl font-bold">SOLD</span>
+                </div>
+              )}
+            </div>
             <div className="p-4">
               <h2 className="text-xl font-bold">{listing.title}</h2>
               <p className="text-lg text-gray-700">${listing.price}</p>

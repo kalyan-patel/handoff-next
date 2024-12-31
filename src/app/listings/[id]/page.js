@@ -80,13 +80,19 @@ export default function ListingDetails() {
     <div className="max-w-4xl mx-auto p-6">
       {/* Image Carousel */}
       <ImageCarousel imgUrls={listing.imgUrls} />
-
+  
       <div className="mt-6">
         <h1 className="text-3xl font-bold">{listing.title}</h1>
-        <p className="text-xl text-gray-700 mt-2">${listing.price}</p>
-        <p className="text-lg text-gray-500 mt-4">{listing.description}</p>
+        <p className="text-xl text-gray-700 mt-2">
+          {listing.resolved ? "SOLD" : `$${listing.price}`}
+        </p>
+        <p className="text-lg text-gray-500 mt-4">
+          {listing.resolved
+            ? "This item has been marked as SOLD by the owner"
+            : listing.description}
+        </p>
       </div>
-
+  
       {/* Button Section */}
       <div className="mt-8 flex justify-center">
         {isOwner ? (
@@ -97,16 +103,18 @@ export default function ListingDetails() {
             Edit Listing
           </button>
         ) : (
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="bg-purple-500 text-white py-3 w-full text-lg rounded hover:bg-purple-600 disabled:bg-gray-400"
-            disabled={loading}
-          >
-            {loading ? 'Messaging...' : 'Message Owner'}
-          </button>
+          !listing.resolved && ( // Corrected conditional rendering
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="bg-purple-500 text-white py-3 w-full text-lg rounded hover:bg-purple-600 disabled:bg-gray-400"
+              disabled={loading}
+            >
+              {loading ? "Messaging..." : "Message Owner"}
+            </button>
+          )
         )}
       </div>
-
+  
       {/* Message Modal */}
       {isModalOpen && !isOwner && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
