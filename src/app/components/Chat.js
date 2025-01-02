@@ -91,10 +91,10 @@ export const Chat = () => {
   }
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "calc(100vh - 6rem)", paddingBottom: "env(safe-area-inset-bottom)"}}>
-      <MainContainer responsive>
+    <div className="flex flex-col h-[calc(100vh-6rem)]">
+      <MainContainer responsive className="flex-1">
         <Sidebar position="left" scrollable>
-          <ConversationHeader style={{ backgroundColor: "#fff" }}>
+          <ConversationHeader>
             <ConversationHeader.Content>
               {currentUser.displayName + "'s messages:"}
             </ConversationHeader.Content>
@@ -130,7 +130,7 @@ export const Chat = () => {
               </ConversationHeader.Content>
             </ConversationHeader>
           )}
-          <MessageList style={{ flexGrow: 1, overflowY: "auto" }}>
+          <MessageList>
             {activeConversation.messages.map((m) => (
               <Message
                 key={m._id}
