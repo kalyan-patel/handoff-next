@@ -91,7 +91,7 @@ export const Chat = () => {
   }
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "calc(100vh - 6rem)"}}>
+    <div style={{ display: "flex", flexDirection: "column", height: "calc(100vh - 6rem)", paddingBottom: "env(safe-area-inset-bottom)"}}>
       <MainContainer responsive>
         <Sidebar position="left" scrollable>
           <ConversationHeader style={{ backgroundColor: "#fff" }}>
