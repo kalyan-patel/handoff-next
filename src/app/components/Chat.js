@@ -92,7 +92,8 @@ export const Chat = () => {
 
   return (
     <div className="flex flex-col h-[calc(100vh-6rem)]">
-      <MainContainer responsive className="flex-1">
+      {/* Main Container */}
+      <MainContainer responsive className="flex-grow overflow-hidden">
         <Sidebar position="left" scrollable>
           <ConversationHeader>
             <ConversationHeader.Content>
@@ -120,7 +121,8 @@ export const Chat = () => {
           </ConversationList>
         </Sidebar>
 
-        <ChatContainer>
+        {/* Chat Container with flex-grow to fill remaining space */}
+        <ChatContainer className="flex-grow flex flex-col">
           {activeConversation && (
             <ConversationHeader>
               <ConversationHeader.Content>
@@ -130,7 +132,7 @@ export const Chat = () => {
               </ConversationHeader.Content>
             </ConversationHeader>
           )}
-          <MessageList>
+          <MessageList className="overflow-y-auto">
             {activeConversation.messages.map((m) => (
               <Message
                 key={m._id}
@@ -141,6 +143,8 @@ export const Chat = () => {
               />
             ))}
           </MessageList>
+
+          {/* Message Input at the bottom */}
           <MessageInput
             placeholder="Type a message..."
             onSend={handleSend}

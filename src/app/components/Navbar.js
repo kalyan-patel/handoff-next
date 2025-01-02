@@ -20,7 +20,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="fixed top-0 left-0 w-full h-24 bg-gray-100 border-b border-gray-300 shadow-md flex items-center justify-between px-4 z-50">
+    <nav className="sticky top-0 w-full h-24 bg-gray-100 border-b border-gray-300 shadow-sm flex items-center justify-between px-4 z-50">
       {/* Logo */}
       <button
         onClick={() => router.push("/")}
