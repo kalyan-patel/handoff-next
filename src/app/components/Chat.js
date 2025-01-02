@@ -96,7 +96,7 @@ export const Chat = () => {
         <Sidebar position="left" scrollable>
           <ConversationHeader style={{ backgroundColor: "#fff" }}>
             <ConversationHeader.Content>
-              {currentUser.displayName + "'s conversations"}
+              {currentUser.displayName + "'s messages:"}
             </ConversationHeader.Content>
           </ConversationHeader>
           <ConversationList>
@@ -145,7 +145,6 @@ export const Chat = () => {
             placeholder="Type a message..."
             onSend={handleSend}
             attachButton={false}
-            style={{ flexShrink: 0 }}
           />
         </ChatContainer>
       </MainContainer>
