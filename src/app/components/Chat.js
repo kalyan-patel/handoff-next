@@ -91,7 +91,7 @@ export const Chat = () => {
   }
 
   return (
-    <div className="flex flex-col h-[calc(100vh-6rem)]">
+    <div className="flex flex-col h-[calc(100vh-6rem)] sm:h-[calc(100vh-8rem)]">
       {/* Main Container */}
       <MainContainer responsive className="flex-grow overflow-hidden">
         <Sidebar position="left" scrollable>
