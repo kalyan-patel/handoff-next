@@ -34,7 +34,7 @@ export default function Navbar() {
       {/* Logo */}
       <button
         onClick={() => router.push("/")}
-        className={`text-3xl font-bold text-blue-500 focus:outline-none ${isMobile ? "mx-auto" : "md:ml-10 lg:ml-20"}`}
+        className={`text-3xl font-bold text-blue-500 focus:outline-none ${isMobile ? "ml-2" : "md:ml-10 lg:ml-20"}`}
       >
         {(isMobile ? "" : "Tufts ") + "Handoff"}
       </button>
@@ -104,7 +104,7 @@ export default function Navbar() {
             onClick={() => router.push("/login")}
             className="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 focus:outline-none"
           >
-            Login/Signup
+            {"Login" + (isMobile ? "" : "/Signup")}
           </button>
         )}
       </div>
