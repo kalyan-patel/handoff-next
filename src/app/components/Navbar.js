@@ -2,13 +2,23 @@
 
 import { useAuth } from "../contexts/AuthContext";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FiInbox, FiPlus } from "react-icons/fi"; // Importing icons
 
 export default function Navbar() {
   const { currentUser, logout } = useAuth();
   const router = useRouter();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.matchMedia('(max-width: 767px)').matches);
+
+  useEffect(() => {
+      const handleResize = () => {
+        setIsMobile(window.matchMedia('(max-width: 767px)').matches);
+      };
+    
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -24,13 +34,13 @@ export default function Navbar() {
       {/* Logo */}
       <button
         onClick={() => router.push("/")}
-        className="text-3xl font-bold md:ml-10 lg:ml-20  text-blue-500 focus:outline-none"
+        className={`text-3xl font-bold text-blue-500 focus:outline-none ${isMobile ? "mx-auto" : "md:ml-10 lg:ml-20"}`}
       >
-        Tufts Handoff
+        {(isMobile ? "" : "Tufts ") + "Handoff"}
       </button>
 
       {/* Action Buttons */}
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center space-x-2 md:space-x-4">
         {/* Messages Button */}
         <button
           onClick={() => router.push("/chat")}
@@ -92,7 +102,7 @@ export default function Navbar() {
         ) : (
           <button
             onClick={() => router.push("/login")}
-            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none"
+            className="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 focus:outline-none"
           >
             Login/Signup
           </button>
