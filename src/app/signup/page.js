@@ -66,7 +66,7 @@ export default function Signup() {
       <div className="w-100" style={{ maxWidth: "400px" }}>
         <Card>
           <Card.Body>
-            <h2 className="text-center mb-4 text-3xl font-bold">Sign Up</h2>
+            <h2 className="text-center mb-4 text-3xl font-medium">Sign Up</h2>
             {error && <Alert variant="danger">{error}</Alert>}
             {success && <Alert variant="success">{success}</Alert>}
             <Form onSubmit={handleSubmit}>
