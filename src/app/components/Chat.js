@@ -15,7 +15,6 @@ import {
 
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import { useAuth } from "../contexts/AuthContext";
-import { NodeNextRequest } from "next/dist/server/base-http/node";
 
 export const Chat = () => {
   const { currentUser } = useAuth();
@@ -23,10 +22,8 @@ export const Chat = () => {
 
   const [conversations, setConversations] = useState([]);
   const [activeConversation, setActiveConversation] = useState(null);
-  const [showSidebar, setShowSidebar] = useState(false)
-
-
-
+  const [isMobile, setIsMobile] = useState(window.matchMedia('(max-width: 767px)').matches);
+  const [showSidebar, setShowSidebar] = useState(isMobile)
 
 
 
@@ -38,6 +35,15 @@ export const Chat = () => {
     setActiveConversation(c)
     setShowSidebar(false)
   }
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.matchMedia('(max-width: 767px)').matches);
+    };
+  
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
 
   useEffect(() => {
@@ -60,6 +66,7 @@ export const Chat = () => {
     };
 
     fetchConversations();
+    console.log(conversations)
   }, []);
 
   const handleSend = async (messageContent) => {
@@ -107,12 +114,12 @@ export const Chat = () => {
   }
 
   return (
-    <div className="flex flex-col h-[calc(100dvh-6rem)]">
+    <div className="h-[calc(100dvh-6rem)]">
       {/* Main Container */}
-      <MainContainer responsive className="flex-grow overflow-hidden">
-        <Sidebar position="left" scrollable className="bg-gray-100 p-2">
-          <ConversationHeader className="mb-4 bg-transparent">
-            <ConversationHeader.Content className="text-lg font-bold">
+      <MainContainer  className="flex-grow overflow-hidden">
+        <Sidebar position="left" scrollable style={showSidebar ? {display: "flex", flexBasis: "auto", width: "100%", maxWidth: "100%"} : (isMobile ? {display: "none"} : {})} className="bg-gray-100 p-2">
+          <ConversationHeader className="mb-2 bg-transparent">
+            <ConversationHeader.Content className="text-xl font-bold">
               {currentUser.displayName + "'s messages:"}
             </ConversationHeader.Content>
           </ConversationHeader>
@@ -131,8 +138,9 @@ export const Chat = () => {
                   info={<span className="text-sm text-gray-500">{lastMessage}</span>}
                   active={activeConversation?._id === c._id}
                   onClick={() => handleConversationClick(c)}
-                  className="hover:bg-gray-200 rounded-md p-2 cursor-pointer"
-                />
+                  className="hover:bg-gray-200 rounded-md p-2 cursor-pointer ml-2 mb-1"
+                >
+                </Conversation>
               );
             })}
           </ConversationList>
@@ -140,15 +148,15 @@ export const Chat = () => {
 
         <ChatContainer style={{display: showSidebar ? "none" : ""}} className="flex-grow flex flex-col bg-white border-l">
           {activeConversation && (
-            <ConversationHeader className="border-b p-4">
-              <ConversationHeader.Back onClick={handleBackClick}/>
-              <ConversationHeader.Content className="text-xl font-bold"
+            <ConversationHeader className="border-b p-3">
+              {isMobile ? <ConversationHeader.Back onClick={handleBackClick}/> : null}
+              <ConversationHeader.Content className="text-lg font-bold pl-3"
                 userName={(activeConversation.users.find((u) => u !== userEmail))}
                 info={activeConversation.topic}
               />
             </ConversationHeader>
           )}
-          <MessageList className="overflow-y-auto p-4 space-y-3">
+          <MessageList className="overflow-y-auto pt-2 lg:p-4">
             {activeConversation.messages.map((m) => (
               <Message
                 key={m._id}
@@ -156,7 +164,7 @@ export const Chat = () => {
                   message: m.content,
                   direction: userEmail === m.sender ? "outgoing" : "incoming",
                 }}
-                className={`p-0.5 rounded-lg ${
+                className={`rounded-lg ${
                   userEmail === m.sender
                     ? "bg-blue-500 text-white self-end"
                     : "bg-gray-200 text-black self-start"
@@ -169,7 +177,7 @@ export const Chat = () => {
             placeholder="Type a message..."
             onSend={handleSend}
             attachButton={false}
-            className="p-3 border-t"
+            className="p-2 border-t"
           />
         </ChatContainer>
       </MainContainer>

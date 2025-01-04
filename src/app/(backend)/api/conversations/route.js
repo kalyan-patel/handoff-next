@@ -4,17 +4,8 @@ import Conversation from '../../../../../models/Conversation';
 export async function GET(req) {
   try {
     const userEmail = req.nextUrl.searchParams.get('email');
-    console.log(userEmail)
-
-    // if (!userEmail) {
-    //   return NextResponse.json(
-    //     { error: 'User email is required' },
-    //     { status: 400 }
-    //   );
-    // }
 
     const conversations = await Conversation.find({ users: userEmail }).sort({ updatedAt: -1 })
-    console.log(conversations)
 
     return NextResponse.json(conversations);
   } catch (error) {

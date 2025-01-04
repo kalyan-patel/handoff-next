@@ -3,7 +3,7 @@
 import { useAuth } from "../contexts/AuthContext";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { FiMessageSquare, FiPlus } from "react-icons/fi"; // Importing icons
+import { FiInbox, FiPlus } from "react-icons/fi"; // Importing icons
 
 export default function Navbar() {
   const { currentUser, logout } = useAuth();
@@ -24,7 +24,7 @@ export default function Navbar() {
       {/* Logo */}
       <button
         onClick={() => router.push("/")}
-        className="text-2xl font-bold text-blue-500 focus:outline-none"
+        className="text-3xl font-bold md:ml-10 lg:ml-20  text-blue-500 focus:outline-none"
       >
         Tufts Handoff
       </button>
@@ -34,10 +34,10 @@ export default function Navbar() {
         {/* Messages Button */}
         <button
           onClick={() => router.push("/chat")}
-          className="p-2 bg-gray-200 rounded-full hover:bg-gray-300 focus:outline-none"
+          className="p-2 bg-blue-500 rounded-full hover:bg-blue-600 focus:outline-none"
           aria-label="Messages"
         >
-          <FiMessageSquare className="w-6 h-6 text-gray-700" />
+          <FiInbox className="w-6 h-6 text-white" />
         </button>
 
         {/* Create Listing Button */}
@@ -56,7 +56,7 @@ export default function Navbar() {
               onClick={() => setDropdownOpen(!dropdownOpen)}
               className="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 focus:outline-none flex items-center"
             >
-              <span className="mr-2">{currentUser.displayName || "Anonymous"}</span>
+              <span className="mr-2 hidden md:block">{currentUser.displayName || "Anonymous"}</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className={`h-4 w-4 transition-transform ${
