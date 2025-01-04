@@ -8,11 +8,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        background: "#000000",
+        foreground: "#ffffff",
       },
     },
   },
-  darkMode: false, // Disable dark mode completely
+  darkMode: "media",
   plugins: [],
 };

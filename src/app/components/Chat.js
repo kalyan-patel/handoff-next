@@ -15,6 +15,7 @@ import {
 
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import { useAuth } from "../contexts/AuthContext";
+import { NodeNextRequest } from "next/dist/server/base-http/node";
 
 export const Chat = () => {
   const { currentUser } = useAuth();
@@ -22,7 +23,22 @@ export const Chat = () => {
 
   const [conversations, setConversations] = useState([]);
   const [activeConversation, setActiveConversation] = useState(null);
+  const [showSidebar, setShowSidebar] = useState(false)
+
+
+
+
+
+
   const [loading, setLoading] = useState(true);
+
+
+  const handleBackClick = () => setShowSidebar(true);
+  const handleConversationClick = (c) => {
+    setActiveConversation(c)
+    setShowSidebar(false)
+  }
+
 
   useEffect(() => {
     const fetchConversations = async () => {
@@ -94,9 +110,9 @@ export const Chat = () => {
     <div className="flex flex-col h-[calc(100dvh-6rem)]">
       {/* Main Container */}
       <MainContainer responsive className="flex-grow overflow-hidden">
-        <Sidebar position="left" scrollable>
-          <ConversationHeader>
-            <ConversationHeader.Content>
+        <Sidebar position="left" scrollable className="bg-gray-100 p-2">
+          <ConversationHeader className="mb-4 bg-transparent">
+            <ConversationHeader.Content className="text-lg font-bold">
               {currentUser.displayName + "'s messages:"}
             </ConversationHeader.Content>
           </ConversationHeader>
@@ -112,27 +128,27 @@ export const Chat = () => {
                 <Conversation
                   key={c._id}
                   name={otherUser + " - " + c.topic}
-                  info={lastMessage}
+                  info={<span className="text-sm text-gray-500">{lastMessage}</span>}
                   active={activeConversation?._id === c._id}
-                  onClick={() => setActiveConversation(c)}
+                  onClick={() => handleConversationClick(c)}
+                  className="hover:bg-gray-200 rounded-md p-2 cursor-pointer"
                 />
               );
             })}
           </ConversationList>
         </Sidebar>
 
-        {/* Chat Container with flex-grow to fill remaining space */}
-        <ChatContainer className="flex-grow flex flex-col">
+        <ChatContainer style={{display: showSidebar ? "none" : ""}} className="flex-grow flex flex-col bg-white border-l">
           {activeConversation && (
-            <ConversationHeader>
-              <ConversationHeader.Content>
-                {(activeConversation.users.find((u) => u !== userEmail)) +
-                  " - " +
-                  activeConversation.topic}
-              </ConversationHeader.Content>
+            <ConversationHeader className="border-b p-4">
+              <ConversationHeader.Back onClick={handleBackClick}/>
+              <ConversationHeader.Content className="text-xl font-bold"
+                userName={(activeConversation.users.find((u) => u !== userEmail))}
+                info={activeConversation.topic}
+              />
             </ConversationHeader>
           )}
-          <MessageList className="overflow-y-auto">
+          <MessageList className="overflow-y-auto p-4 space-y-3">
             {activeConversation.messages.map((m) => (
               <Message
                 key={m._id}
@@ -140,15 +156,20 @@ export const Chat = () => {
                   message: m.content,
                   direction: userEmail === m.sender ? "outgoing" : "incoming",
                 }}
+                className={`p-0.5 rounded-lg ${
+                  userEmail === m.sender
+                    ? "bg-blue-500 text-white self-end"
+                    : "bg-gray-200 text-black self-start"
+                }`}
               />
             ))}
           </MessageList>
 
-          {/* Message Input at the bottom */}
           <MessageInput
             placeholder="Type a message..."
             onSend={handleSend}
             attachButton={false}
+            className="p-3 border-t"
           />
         </ChatContainer>
       </MainContainer>
