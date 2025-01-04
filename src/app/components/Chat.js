@@ -138,7 +138,7 @@ export const Chat = () => {
                   info={<span className="text-sm text-gray-500">{lastMessage}</span>}
                   active={activeConversation?._id === c._id}
                   onClick={() => handleConversationClick(c)}
-                  className="hover:bg-gray-200 rounded-md p-2 cursor-pointer ml-2 mb-1"
+                  className="hover:bg-gray-200 rounded-md p-3 cursor-pointer mb-1"
                 >
                 </Conversation>
               );

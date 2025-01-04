@@ -86,7 +86,7 @@ export default function FeedbackBox() {
         <Button
           type="submit"
           variant="primary"
-          className="mt-2"
+          className="mt-2 bg-blue-400"
           disabled={submitted}
         >
           Submit Feedback

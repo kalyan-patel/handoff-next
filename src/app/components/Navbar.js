@@ -40,11 +40,11 @@ export default function Navbar() {
       </button>
 
       {/* Action Buttons */}
-      <div className="flex items-center space-x-2 md:space-x-4">
+      <div className="flex items-center space-x-2 md:space-x-4 md:mr-10 lg:mr-20">
         {/* Messages Button */}
         <button
           onClick={() => router.push("/chat")}
-          className="p-2 bg-blue-500 rounded-full hover:bg-blue-600 focus:outline-none"
+          className="p-2 bg-blue-400 rounded-full hover:bg-blue-500 focus:outline-none"
           aria-label="Messages"
         >
           <FiInbox className="w-6 h-6 text-white" />
@@ -53,7 +53,7 @@ export default function Navbar() {
         {/* Create Listing Button */}
         <button
           onClick={() => router.push("/listings/newlisting")}
-          className="p-2 bg-blue-500 rounded-full hover:bg-blue-600 text-white focus:outline-none"
+          className="p-2 bg-blue-400 rounded-full hover:bg-blue-500 text-white focus:outline-none"
           aria-label="Create New Listing"
         >
           <FiPlus className="w-6 h-6" />
@@ -64,7 +64,7 @@ export default function Navbar() {
           <div className="relative">
             <button
               onClick={() => setDropdownOpen(!dropdownOpen)}
-              className="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 focus:outline-none flex items-center"
+              className="px-4 py-2 bg-gray-300 rounded-lg hover:bg-slate-300 focus:outline-none flex items-center"
             >
               <span className="mr-2 hidden md:block">{currentUser.displayName || "Anonymous"}</span>
               <svg
@@ -102,7 +102,7 @@ export default function Navbar() {
         ) : (
           <button
             onClick={() => router.push("/login")}
-            className="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 focus:outline-none"
+            className="px-4 py-2 bg-gray-300 rounded-lg hover:bg-slate-300 focus:outline-none"
           >
             {"Login" + (isMobile ? "" : "/Signup")}
           </button>
