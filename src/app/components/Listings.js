@@ -45,7 +45,11 @@ const Listings = () => {
           <div
             key={listing._id}
             className="relative border rounded-lg shadow-md overflow-hidden cursor-pointer"
-            onClick={() => router.push(`/listings/${listing._id}`)}
+            onClick={() => {
+              if (!listing.resolved) {
+                router.push(`/listings/${listing._id}`);
+              }
+            }}
           >
             {/* Thumbnail with conditional overlay */}
             <div className="relative">

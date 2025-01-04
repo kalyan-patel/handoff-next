@@ -1,8 +1,10 @@
 import { NextResponse } from 'next/server';
+import connectToDB from '../../../../../lib/mongoose';
 import Conversation from '../../../../../models/Conversation';
 
 export async function GET(req) {
   try {
+    await connectToDB();
     const userEmail = req.nextUrl.searchParams.get('email');
 
     const conversations = await Conversation.find({ users: userEmail }).sort({ updatedAt: -1 })
@@ -17,6 +19,7 @@ export async function GET(req) {
 
 export async function POST(req) {
   try {
+    await connectToDB();
     const { owner, interestedUser, topic, firstMessage } = await req.json();
 
     if (!owner || !interestedUser || !firstMessage) {
