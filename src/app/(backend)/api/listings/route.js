@@ -23,9 +23,9 @@ export async function POST(req) {
     await connectToDB();
     const body = await req.json(); // Parse JSON payload
 
-    const { title, description, price, user, imgUrls, thumbnailUrl } = body;
+    const { title, description, price, userEmail, userDisplayName, imgUrls, thumbnailUrl } = body;
 
-    if (!title || !description || !price || !user || !imgUrls || !thumbnailUrl) {
+    if (!title || !description || !price || !userEmail || !userDisplayName || !imgUrls || !thumbnailUrl) {
       throw new Error("Missing required fields");
     }
 
@@ -33,7 +33,8 @@ export async function POST(req) {
       title,
       description,
       price,
-      user,
+      userEmail,
+      userDisplayName,
       imgUrls: imgUrls,
       thumbnailUrl: thumbnailUrl,
     });

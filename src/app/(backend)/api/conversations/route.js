@@ -7,7 +7,7 @@ export async function GET(req) {
     await connectToDB();
     const userEmail = req.nextUrl.searchParams.get('email');
 
-    const conversations = await Conversation.find({ users: userEmail }).sort({ updatedAt: -1 })
+    const conversations = await Conversation.find({ userEmails: userEmail }).sort({ updatedAt: -1 })
 
     return NextResponse.json(conversations);
   } catch (error) {
@@ -20,21 +20,22 @@ export async function GET(req) {
 export async function POST(req) {
   try {
     await connectToDB();
-    const { owner, interestedUser, topic, firstMessage } = await req.json();
+    const { ownerEmail, ownerDisplayName, interestedUserEmail, interestedUserDisplayName, topic, firstMessage } = await req.json();
 
-    if (!owner || !interestedUser || !firstMessage) {
+    if (!ownerEmail || !ownerDisplayName || !interestedUserEmail || !interestedUserDisplayName || !firstMessage) {
       return NextResponse.json(
-        { error: 'Owner ID and message are required' },
+        { error: 'Owner IDs and first message are required' },
         { status: 400 }
       );
     }
 
     const newConversation = new Conversation({
-      users: [owner, interestedUser],
+      userEmails: [ownerEmail, interestedUserEmail],
+      userDisplayNames: [ownerDisplayName, interestedUserDisplayName],
       topic: topic,
       messages: [
         {
-          sender: interestedUser,
+          sender: interestedUserEmail,
           content: firstMessage,
           timestamp: new Date().toISOString(),
         }

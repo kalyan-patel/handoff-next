@@ -75,7 +75,7 @@ export default function Signup() {
                 <Form.Control type="text" ref={nameRef} required />
               </Form.Group>
               <Form.Group id="email" className="mb-2">
-                <Form.Label>Tufts email</Form.Label>
+                <Form.Label>Tufts Email</Form.Label>
                 <Form.Control type="email" ref={emailRef} required />
               </Form.Group>
               <Form.Group id="password" className="mb-2">

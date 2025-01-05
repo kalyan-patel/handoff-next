@@ -46,7 +46,8 @@ export default function NewListing() {
         title: titleRef.current.value,
         description: descRef.current.value,
         price: priceRef.current.value,
-        user: currentUser.email,
+        userEmail: currentUser.email,
+        userDisplayName: currentUser.displayName,
         imgUrls: uploadedImageUrls,
         thumbnailUrl: uploadedImageUrls[thumbnailIndex],
       };

@@ -45,8 +45,10 @@ export default function ListingDetails() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          owner: listing.user,
-          interestedUser: currentUser.email,
+          ownerEmail: listing.userEmail,
+          ownerDisplayName: listing.userDisplayName,
+          interestedUserEmail: currentUser.email,
+          interestedUserDisplayName: currentUser.displayName,
           topic: listing.title,
           firstMessage: message,
         }),

@@ -7,7 +7,8 @@ const messageSchema = new mongoose.Schema({
 });
 
 const conversationSchema = new mongoose.Schema({
-  users: { type: [String], required: true },
+  userEmails: { type: [String], required: true },
+  userDisplayNames: { type: [String], required: true },
   topic: { type: String },
   messages: { type: [messageSchema], required: true }
 }, { timestamps: true }); // Automatically creates createdAt and updatedAt fields

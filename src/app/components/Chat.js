@@ -26,7 +26,6 @@ export const Chat = () => {
   const [showSidebar, setShowSidebar] = useState(isMobile)
 
 
-
   const [loading, setLoading] = useState(true);
 
 
@@ -125,7 +124,7 @@ export const Chat = () => {
           </ConversationHeader>
           <ConversationList>
             {conversations.map((c) => {
-              const otherUser = c.users.find((u) => u !== userEmail);
+              const otherUser = c.userDisplayNames[(activeConversation.userEmails.indexOf(currentUser.email) + 1) % 2];
               const lastMessage =
                 c.messages.length > 0
                   ? c.messages[c.messages.length - 1].content
@@ -151,7 +150,7 @@ export const Chat = () => {
             <ConversationHeader className="border-b p-3">
               {isMobile ? <ConversationHeader.Back onClick={handleBackClick}/> : null}
               <ConversationHeader.Content className="text-lg font-bold pl-3"
-                userName={(activeConversation.users.find((u) => u !== userEmail))}
+                userName={(activeConversation.userDisplayNames[(activeConversation.userEmails.indexOf(currentUser.email) + 1) % 2])}
                 info={activeConversation.topic}
               />
             </ConversationHeader>
