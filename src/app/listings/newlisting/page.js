@@ -36,7 +36,7 @@ export default function NewListing() {
   
     try {
       const uploadedImageUrls = [];
-      for (let i = 0; i < imgRef.current.files.length; i++) {
+      for (let i = 0; i < Math.min(imgRef.current.files.length, 4); i++) {
         const file = imgRef.current.files[i];
         const imageUrl = await uploadToCloudinary(file);
         uploadedImageUrls.push(imageUrl);

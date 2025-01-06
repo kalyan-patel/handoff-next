@@ -76,7 +76,7 @@ export default function ListingDetails() {
     return <p>Loading...</p>;
   }
 
-  const isOwner = currentUser?.email === listing.user;
+  const isOwner = currentUser?.email === listing.userEmail;
 
   return (
     <div className="max-w-4xl mx-auto p-6">

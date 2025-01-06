@@ -37,7 +37,7 @@ export default function EditListing({ params }) {
     fetchListingData();
   }, [id]);
 
-  if (!currentUser || (listingData && listingData.user !== currentUser.email)) {
+  if (!currentUser || (listingData && listingData.userEmail !== currentUser.email)) {
     return <div>You are not the owner of this listing.</div>;
   }
 
@@ -68,7 +68,8 @@ export default function EditListing({ params }) {
         title: titleRef.current.value,
         description: descRef.current.value,
         price: priceRef.current.value,
-        user: currentUser.email,
+        userEmail: currentUser.email,
+        userDisplayName: currentUser.displayName,
         imgUrls: [...images, ...uploadedImageUrls],
         thumbnailUrl: uploadedImageUrls[thumbnailIndex] || images[thumbnailIndex],
         lastUpdated: Date.now(),

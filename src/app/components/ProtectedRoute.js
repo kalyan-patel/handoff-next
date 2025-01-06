@@ -19,7 +19,7 @@ export default function ProtectedRoute({ children }) {
   }
 
   if (!currentUser.emailVerified) {
-    return <>Please verify your email at {currentUser.email}</>;
+    return <>Please click the verification link sent to {currentUser.email}. If you have already verified, you may need to refresh the page.</>;
   }
 
   // If logged in and verified, render the protected content
