@@ -17,6 +17,12 @@ export default function FeedbackBox() {
       setError("Feedback cannot be empty!");
       return;
     }
+
+    if (!currentUser) {
+      setError("You must be logged in to submit feedback!");
+      return;
+    }
+
     setError("");
     setSubmitted(true);
 
@@ -49,7 +55,10 @@ export default function FeedbackBox() {
     }
   };
 
-  if (!show || !currentUser) return null;
+  if (!show) return null;
+
+  // For only showing to users
+  // if (!show || !currentUser) return null;
 
   return (
     <div
