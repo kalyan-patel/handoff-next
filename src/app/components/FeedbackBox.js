@@ -71,7 +71,7 @@ export default function FeedbackBox() {
       }}
     >
       <div className="d-flex align-items-center justify-content-between">
-        <h5 className="m-0">Feedback/suggestions for the site:</h5>
+        <h5 className="m-0 font-medium text-xl">Feedback/suggestions for the site:</h5>
         <Button
           variant="outline-secondary"
           size="sm"

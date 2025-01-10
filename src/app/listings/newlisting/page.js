@@ -3,7 +3,7 @@
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from '../../contexts/AuthContext';
-import {uploadToCloudinary } from '../../../../lib/cloudinary'
+import { uploadToS3 } from '../../../../lib/aws'
 
 export default function NewListing() {
   const titleRef = useRef();
@@ -38,7 +38,7 @@ export default function NewListing() {
       const uploadedImageUrls = [];
       for (let i = 0; i < Math.min(imgRef.current.files.length, 4); i++) {
         const file = imgRef.current.files[i];
-        const imageUrl = await uploadToCloudinary(file);
+        const imageUrl = await uploadToS3(file);
         uploadedImageUrls.push(imageUrl);
       }
   

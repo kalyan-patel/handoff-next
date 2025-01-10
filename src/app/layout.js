@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "Tufts Handoff",
-  description: "Buy and sell furniture clothes, and much more!",
+  description: "Buy and sell furniture, clothes, and much more!",
 };
 
 export default function RootLayout({ children }) {
