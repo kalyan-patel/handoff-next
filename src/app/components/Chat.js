@@ -109,7 +109,7 @@ export const Chat = () => {
   }
 
   if (!conversations.length) {
-    return <div>You have no conversations. Start a new one!</div>;
+    return <div>You have no conversations. Start a new one by reaching out to a seller!</div>;
   }
 
   return (
@@ -118,13 +118,13 @@ export const Chat = () => {
       <MainContainer  className="flex-grow overflow-hidden">
         <Sidebar position="left" scrollable style={showSidebar ? {display: "flex", flexBasis: "auto", width: "100%", maxWidth: "100%"} : (isMobile ? {display: "none"} : {})} className="bg-gray-100 p-2">
           <ConversationHeader className="mb-2 bg-transparent">
-            <ConversationHeader.Content className="text-xl font-bold">
-              {currentUser.displayName + "'s messages:"}
+            <ConversationHeader.Content className="text-2xl font-bold">
+              Messages:
             </ConversationHeader.Content>
           </ConversationHeader>
           <ConversationList>
             {conversations.map((c) => {
-              const otherUser = c.userDisplayNames[(activeConversation.userEmails.indexOf(currentUser.email) + 1) % 2];
+              const otherUser = c.userDisplayNames[(c.userEmails.indexOf(currentUser.email) + 1) % 2];
               const lastMessage =
                 c.messages.length > 0
                   ? c.messages[c.messages.length - 1].content

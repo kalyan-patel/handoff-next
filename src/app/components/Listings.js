@@ -60,7 +60,7 @@ const Listings = () => {
               />
               {listing.resolved && (
                 <div className="absolute inset-0 bg-red-600 bg-opacity-50 flex justify-center items-center">
-                  <span className="text-white text-2xl font-bold">SOLD</span>
+                  <span className="text-white text-4xl font-bold">SOLD</span>
                 </div>
               )}
             </div>
