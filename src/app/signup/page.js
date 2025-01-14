@@ -22,9 +22,9 @@ export default function Signup() {
     e.preventDefault();
     
     // Check for Tufts email
-    // if (!emailRef.current.value.endsWith("@tufts.edu")) {
-    //   return setError("You must use a Tufts email address");
-    // }
+    if (!emailRef.current.value.endsWith("@tufts.edu")) {
+      return setError("You must use a Tufts email address");
+    }
 
     if (nameRef.current.value.length > 12) {
       return setError("Name must be 12 characters or less");
