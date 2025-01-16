@@ -44,7 +44,7 @@ const Listings = () => {
         {listings.map((listing) => (
           <div
             key={listing._id}
-            className="relative border rounded-lg shadow-md overflow-hidden cursor-pointer transition-shadow duration-300 ease-in-out hover:shadow-lg group"
+            className="relative border rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg group"
             onClick={() => {
               if (!listing.resolved) {
                 router.push(`/listings/${listing._id}`);
