@@ -65,7 +65,7 @@ const Listings = () => {
               )}
             </div>
             <div className="p-4">
-              <h2 className="text-xl font-bold mb-2">{listing.title}</h2>
+              <h2 className="text-xl font-bold mb-2 truncate">{listing.title}</h2>
               <p className="text-lg text-gray-700 mb-3">${listing.price}</p>
             </div>
           </div>
