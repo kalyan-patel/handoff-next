@@ -44,7 +44,7 @@ const Listings = () => {
         {listings.map((listing) => (
           <div
             key={listing._id}
-            className="relative border rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg group"
+            className={`relative border rounded-lg shadow-md overflow-hidden ${listing.resolved ? "" : "cursor-pointer hover:shadow-lg group"}`}
             onClick={() => {
               if (!listing.resolved) {
                 router.push(`/listings/${listing._id}`);
@@ -56,11 +56,13 @@ const Listings = () => {
               <img
                 src={listing.thumbnailUrl || "/images/fallback-image.jpg"}
                 alt={listing.title}
-                className="w-full h-48 object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
+                className={`w-full h-48 object-cover transition-transform duration-300 ease-in-out ${
+                  listing.resolved ? "" : "group-hover:scale-105"
+                }`}
               />
               {listing.resolved && (
                 <div className="absolute inset-0 bg-red-600 bg-opacity-50 flex justify-center items-center">
-                  <span className="text-white text-4xl font-bold">SOLD</span>
+                  <span className="text-white text-4xl font-bold pointer-events-none">SOLD</span>
                 </div>
               )}
             </div>
