@@ -44,7 +44,7 @@ const Listings = () => {
         {listings.map((listing) => (
           <div
             key={listing._id}
-            className="relative border rounded-lg shadow-md overflow-hidden cursor-pointer"
+            className="relative border rounded-lg shadow-md overflow-hidden cursor-pointer transition-shadow duration-300 ease-in-out hover:shadow-lg group"
             onClick={() => {
               if (!listing.resolved) {
                 router.push(`/listings/${listing._id}`);
@@ -52,11 +52,11 @@ const Listings = () => {
             }}
           >
             {/* Thumbnail with conditional overlay */}
-            <div className="relative">
+            <div className="relative overflow-hidden">
               <img
                 src={listing.thumbnailUrl || "/images/fallback-image.jpg"}
                 alt={listing.title}
-                className="w-full h-48 object-cover"
+                className="w-full h-48 object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
               />
               {listing.resolved && (
                 <div className="absolute inset-0 bg-red-600 bg-opacity-50 flex justify-center items-center">
@@ -66,7 +66,7 @@ const Listings = () => {
             </div>
             <div className="p-4">
               <h2 className="text-xl font-bold mb-2 truncate">{listing.title}</h2>
-              <p className="text-lg text-gray-700 mb-3">${listing.price}</p>
+              <p className="text-lg text-gray-700 mb-2.5">${listing.price}</p>
             </div>
           </div>
         ))}
