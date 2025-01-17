@@ -109,7 +109,7 @@ export const Chat = () => {
   }
 
   if (!conversations.length) {
-    return <div>You have no conversations. Start a new one by reaching out to a seller!</div>;
+    return <div>You have no conversations. New conversations will appear when you reach out to a seller, or a when buyer reaches out to you!</div>;
   }
 
   return (
