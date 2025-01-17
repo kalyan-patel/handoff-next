@@ -18,7 +18,7 @@ export default function ImageCarousel({ imgUrls }) {
   };
 
   return (
-    <div className="relative w-full h-96 rounded-lg bg-gradient-to-b from-pink-400 to-purple-500">
+    <div className="relative w-full h-96 rounded-lg bg-gradient-to-b from-purple-500 via-indigo-400 to-blue-300">
       {/* div styling suggestings: border, shadow, different colors*/}
       <div className="overflow-hidden w-full h-full">
         <img
