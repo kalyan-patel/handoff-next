@@ -2,22 +2,34 @@
 
 import { useAuth } from "../contexts/AuthContext";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
-import { FiInbox, FiPlus } from "react-icons/fi"; // Importing icons
+import { useState, useEffect, useRef } from "react";
+import { FiInbox, FiPlus } from "react-icons/fi";
 
 export default function Navbar() {
   const { currentUser, logout } = useAuth();
   const router = useRouter();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.matchMedia('(max-width: 767px)').matches);
+  const dropdownRef = useRef(null);
 
   useEffect(() => {
-      const handleResize = () => {
-        setIsMobile(window.matchMedia('(max-width: 767px)').matches);
-      };
-    
-      window.addEventListener('resize', handleResize);
-      return () => window.removeEventListener('resize', handleResize);
+    const handleResize = () => {
+      setIsMobile(window.matchMedia('(max-width: 767px)').matches);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const handleLogout = async () => {
@@ -61,7 +73,7 @@ export default function Navbar() {
 
         {/* Profile Section */}
         {currentUser ? (
-          <div className="relative">
+          <div className="relative" ref={dropdownRef}>
             <button
               onClick={() => setDropdownOpen(!dropdownOpen)}
               className="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 focus:outline-none flex items-center"
