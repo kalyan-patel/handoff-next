@@ -4,8 +4,8 @@ import Listings from './components/Listings.js'
 export default function Home() {
   return (
     <>
-      <FeedbackBox/>
       <Listings/>
+      <FeedbackBox/>
     </>
   );
 }

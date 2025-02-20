@@ -61,24 +61,16 @@ export default function FeedbackBox() {
   // if (!show || !currentUser) return null;
 
   return (
-    <div
-      style={{
-        width: "100%",
-        zIndex: 1000,
-        backgroundColor: "#ffffff",
-        padding: "10px 20px",
-        boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-      }}
-    >
+    <div className="max-w-lg, z-50, p-10 md:px-20">
       <div className="d-flex align-items-center justify-content-between">
         <h5 className="m-0 font-medium text-xl">Feedback/suggestions for the site:</h5>
-        <Button
+        {/* <Button
           variant="outline-secondary"
           size="sm"
           onClick={() => setShow(false)}
         >
           Close
-        </Button>
+        </Button> */}
       </div>
       <Form onSubmit={handleSubmit} className="mt-3">
         {error && <Alert variant="danger">{error}</Alert>}

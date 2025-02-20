@@ -60,7 +60,7 @@ export default function Navbar() {
         {/* Messages Button */}
         <button
           onClick={() => router.push("/chat")}
-          className={`focus:outline-none ${isMobile ? "p-2 bg-blue-400 rounded-full hover:bg-blue-500" : "text-gray-500 text-lg opacity-90 hover:text-blue-600"}`}
+          className={`focus:outline-none ${isMobile ? "p-2 bg-blue-400 rounded-full hover:bg-blue-500" : "text-gray-500 text-lg opacity-90 hover:text-indigo-700"}`}
           aria-label="Messages"
         >
           {isMobile ? <FiInbox className="w-6 h-6 text-white" /> : "Your Messages"}
@@ -69,7 +69,7 @@ export default function Navbar() {
         {/* Create Listing Button */}
         <button
           onClick={() => router.push("/listings/newlisting")}
-          className={`focus:outline-none ${isMobile ? "p-2 bg-blue-400 rounded-full hover:bg-blue-500 text-white" : "text-gray-500 text-lg opacity-90 hover:text-blue-600"}`}
+          className={`focus:outline-none ${isMobile ? "p-2 bg-blue-400 rounded-full hover:bg-blue-500 text-white" : "text-gray-500 text-lg opacity-90 hover:text-indigo-700"}`}
           aria-label="Create New Listing"
         >
           {isMobile ? <FiPlusSquare className="w-6 h-6" /> : "Add a Listing"}
