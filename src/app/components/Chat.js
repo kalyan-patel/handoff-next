@@ -113,7 +113,7 @@ export const Chat = () => {
   }
 
   return (
-    <div className="h-[calc(100dvh-6rem)]">
+    <div className="h-[calc(100dvh-7rem)]">
       {/* Main Container */}
       <MainContainer  className="flex-grow overflow-hidden">
         <Sidebar position="left" scrollable style={showSidebar ? {display: "flex", flexBasis: "auto", width: "100%", maxWidth: "100%"} : (isMobile ? {display: "none"} : {})} className="bg-gray-100 p-2">

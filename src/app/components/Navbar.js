@@ -42,35 +42,35 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 w-full h-24 bg-gray-100 border-b border-gray-300 shadow-sm flex items-center justify-between px-4 z-50">
+    <nav className="sticky top-0 w-full h-28 bg-white shadow-sm flex items-center justify-between px-4 z-50">
       {/* Logo */}
       <button
         onClick={() => router.push("/")}
-        className={`text-3xl font-bold text-blue-500 focus:outline-none ${
-          isMobile ? "ml-4" : "md:ml-10 lg:ml-20"
+        className={`font-bold text-blue-500 focus:outline-none ${
+          isMobile ? "text-3xl ml-4" : "text-4xl md:ml-10 lg:ml-20"
         }`}
       >
         {(isMobile ? "" : "Tufts ") + "Handoff"}
       </button>
 
       {/* Action Buttons */}
-      <div className="flex items-center space-x-3 md:space-x-4 md:mr-10">
+      <div className={`flex items-center ${isMobile ? "space-x-3" : "space-x-6 md:space-x-8 md:mr-12"}`}>
         {/* Messages Button */}
         <button
           onClick={() => router.push("/chat")}
-          className="p-2 bg-blue-400 rounded-full hover:bg-blue-500 focus:outline-none"
+          className={`focus:outline-none ${isMobile ? "p-2 bg-blue-400 rounded-full hover:bg-blue-500" : "text-gray-500 text-lg opacity-90 hover:text-blue-600"}`}
           aria-label="Messages"
         >
-          <FiInbox className="w-6 h-6 text-white" />
+          {isMobile ? <FiInbox className="w-6 h-6 text-white" /> : "Your Messages"}
         </button>
 
         {/* Create Listing Button */}
         <button
           onClick={() => router.push("/listings/newlisting")}
-          className="p-2 bg-blue-400 rounded-full hover:bg-blue-500 text-white focus:outline-none"
+          className={`focus:outline-none ${isMobile ? "p-2 bg-blue-400 rounded-full hover:bg-blue-500 text-white" : "text-gray-500 text-lg opacity-90 hover:text-blue-600"}`}
           aria-label="Create New Listing"
         >
-          <FiPlusSquare className="w-6 h-6" />
+          {isMobile ? <FiPlusSquare className="w-6 h-6" /> : "Add a Listing"}
         </button>
 
         {/* Profile Section */}

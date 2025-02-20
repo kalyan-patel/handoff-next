@@ -65,7 +65,7 @@ export default function FeedbackBox() {
       style={{
         width: "100%",
         zIndex: 1000,
-        backgroundColor: "#f8f9fa",
+        backgroundColor: "#ffffff",
         padding: "10px 20px",
         boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
       }}

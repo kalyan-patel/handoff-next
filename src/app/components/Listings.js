@@ -30,45 +30,47 @@ const Listings = () => {
   }, []);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <p className="text-center text-lg font-semibold">Loading listings...</p>;
   }
 
   if (error) {
-    return <p>Error: {error}</p>;
+    return <p className="text-center text-red-600 font-semibold">Error: {error}</p>;
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
-      {/* <h1 className="text-4xl font-bold mb-6">Listings</h1> */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="mx-auto px-4 py-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
         {listings.map((listing) => (
           <div
             key={listing._id}
-            className={`relative border rounded-lg shadow-md overflow-hidden ${listing.resolved ? "" : "cursor-pointer hover:shadow-lg group"}`}
+            className={`relative border rounded-lg shadow-sm overflow-hidden bg-white transition-all duration-300 ${
+              listing.resolved ? "" : "cursor-pointer hover:shadow-md hover:-translate-y-1 group"
+            }`}
             onClick={() => {
               if (!listing.resolved) {
                 router.push(`/listings/${listing._id}`);
               }
             }}
           >
-            {/* Thumbnail with conditional overlay */}
-            <div className="relative overflow-hidden">
+            {/* Image Section */}
+            <div className="relative overflow-hidden h-40">
               <img
                 src={listing.thumbnailUrl || "/images/fallback-image.jpg"}
                 alt={listing.title}
-                className={`w-full h-48 object-cover transition-transform duration-300 ease-in-out ${
-                  listing.resolved ? "" : "group-hover:scale-105"
-                }`}
+                className="w-full h-full object-cover"
               />
               {listing.resolved && (
-                <div className="absolute inset-0 bg-red-600 bg-opacity-50 flex justify-center items-center">
-                  <span className="text-white text-4xl font-bold pointer-events-none">SOLD</span>
+                <div className="absolute top-2 left-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">
+                  SOLD
                 </div>
               )}
             </div>
-            <div className="p-4">
-              <h2 className="text-xl font-bold mb-2 truncate">{listing.title}</h2>
-              <p className="text-lg text-gray-700 mb-2.5">${listing.price}</p>
+
+            {/* Listing Details - Compact Design */}
+            <div className="p-3">
+              <h2 className="text-lg mb-1 font-semibold text-gray-900 truncate">{listing.title}</h2>
+              <p className="text-xs mb-1.5 text-gray-500">{listing.userDisplayName || "Unknown Seller"}</p>
+              <p className="text-sm mb-2 font-semibold">${listing.price}</p>
             </div>
           </div>
         ))}
