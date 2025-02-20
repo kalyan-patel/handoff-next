@@ -44,7 +44,7 @@ const Listings = () => {
           <div
             key={listing._id}
             className={`relative border rounded-lg shadow-sm overflow-hidden bg-white transition-all duration-300 ${
-              listing.resolved ? "" : "cursor-pointer hover:shadow-md hover:-translate-y-1 group"
+              listing.resolved ? "" : "cursor-pointer hover:shadow-md hover:-translate-y-1.5 group"
             }`}
             onClick={() => {
               if (!listing.resolved) {
