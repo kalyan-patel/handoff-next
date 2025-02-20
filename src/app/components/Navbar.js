@@ -4,6 +4,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useRouter } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
 import { FiInbox, FiPlusSquare, FiUser } from "react-icons/fi";
+import { FaHandshake } from "react-icons/fa";
 
 export default function Navbar() {
   const { currentUser, logout } = useAuth();
@@ -46,11 +47,12 @@ export default function Navbar() {
       {/* Logo */}
       <button
         onClick={() => router.push("/")}
-        className={`font-bold text-blue-500 focus:outline-none ${
-          isMobile ? "text-3xl ml-4" : "text-4xl md:ml-10 lg:ml-20"
+        className={`font-bold text-blue-500 focus:outline-none flex items-center gap-2 ${
+          isMobile ? "text-3xl ml-4" : "text-3xl md:ml-10 lg:ml-20"
         }`}
       >
-        {(isMobile ? "" : "Tufts ") + "Handoff"}
+        {!isMobile && <FaHandshake className="w-14 h-14 mt-1 ml-2 mr-1 text-blue-500" />}
+        {isMobile ? "Handoff" : " Tufts Handoff"}
       </button>
 
       {/* Action Buttons */}
