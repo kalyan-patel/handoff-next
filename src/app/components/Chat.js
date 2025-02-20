@@ -116,7 +116,7 @@ export const Chat = () => {
     <div className="h-[calc(100dvh-7rem)]">
       {/* Main Container */}
       <MainContainer  className="flex-grow overflow-hidden">
-        <Sidebar position="left" scrollable style={showSidebar ? {display: "flex", flexBasis: "auto", width: "100%", maxWidth: "100%"} : (isMobile ? {display: "none"} : {})} className="bg-gray-100 p-2">
+        <Sidebar position="left" scrollable style={showSidebar ? {display: "flex", flexBasis: "auto", width: "100%", maxWidth: "100%"} : (isMobile ? {display: "none"} : {})} className=" p-2">
           <ConversationHeader className="mb-2 bg-transparent">
             <ConversationHeader.Content className="text-2xl font-bold">
               Messages:
