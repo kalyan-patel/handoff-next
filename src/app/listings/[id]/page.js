@@ -1,9 +1,9 @@
 "use client";
 
-import { useParams, useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react';
-import { useAuth } from '../../contexts/AuthContext';
-import ImageCarousel from '../../components/ImageCarousel';
+import { useParams, useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useAuth } from "../../contexts/AuthContext";
+import ImageCarousel from "../../components/ImageCarousel";
 
 export default function ListingDetails() {
   const { id } = useParams();
@@ -12,7 +12,7 @@ export default function ListingDetails() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   const { currentUser } = useAuth();
 
@@ -22,7 +22,7 @@ export default function ListingDetails() {
         try {
           const res = await fetch(`/api/listings/${id}`);
           if (!res.ok) {
-            throw new Error('Failed to fetch listing');
+            throw new Error("Failed to fetch listing");
           }
           const data = await res.json();
           setListing(data);
@@ -39,10 +39,10 @@ export default function ListingDetails() {
 
     setLoading(true);
     try {
-      const response = await fetch('/api/conversations', {
-        method: 'POST',
+      const response = await fetch("/api/conversations", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           ownerEmail: listing.userEmail,
@@ -55,13 +55,13 @@ export default function ListingDetails() {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to start conversation');
+        throw new Error("Failed to start conversation");
       }
 
       router.push(`/chat`);
     } catch (error) {
-      console.error('Error starting conversation:', error);
-      alert('Could not start a conversation with the owner.');
+      console.error("Error starting conversation:", error);
+      alert("Could not start a conversation with the owner.");
     } finally {
       setLoading(false);
       setIsModalOpen(false);
@@ -82,19 +82,26 @@ export default function ListingDetails() {
     <div className="max-w-4xl mx-auto p-6">
       {/* Image Carousel */}
       <ImageCarousel imgUrls={listing.imgUrls} />
-  
+
       <div className="mt-6">
         <h1 className="text-3xl font-bold">{listing.title}</h1>
-        <p className="text-xl text-gray-700 mt-2">
+
+        {/* ✅ Display Owner's Name */}
+        <p className="text-lg text-gray-500 mt-2">
+          Listed by: {listing.userDisplayName || "Unknown Seller"}
+        </p>
+
+        <p className="text-2xl font-medium text-blue-500">
           {listing.resolved ? "SOLD" : `$${listing.price}`}
         </p>
+
         <p className="text-lg text-gray-500 mt-4">
           {listing.resolved
             ? "This item has been marked as SOLD by the owner"
             : listing.description}
         </p>
       </div>
-  
+
       {/* Button Section */}
       <div className="mt-8 flex justify-center">
         {isOwner ? (
@@ -105,7 +112,7 @@ export default function ListingDetails() {
             Edit Listing
           </button>
         ) : (
-          !listing.resolved && ( // Corrected conditional rendering
+          !listing.resolved && (
             <button
               onClick={() => setIsModalOpen(true)}
               className="bg-purple-500 text-white py-3 w-full text-lg rounded hover:bg-purple-600 disabled:bg-gray-400"
@@ -116,7 +123,7 @@ export default function ListingDetails() {
           )
         )}
       </div>
-  
+
       {/* Message Modal */}
       {isModalOpen && !isOwner && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">

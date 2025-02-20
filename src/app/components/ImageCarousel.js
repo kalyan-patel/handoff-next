@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 
 export default function ImageCarousel({ imgUrls }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -18,13 +18,12 @@ export default function ImageCarousel({ imgUrls }) {
   };
 
   return (
-    <div className="relative w-full h-96 rounded-lg bg-gradient-to-b from-purple-500 via-indigo-400 to-blue-300">
-      {/* div styling suggestings: border, shadow, different colors*/}
-      <div className="overflow-hidden w-full h-full">
+    <div className="relative w-full h-80 md:h-96 lg:h-[32rem] rounded-lg bg-gradient-to-b from-purple-500 via-indigo-400 to-blue-300">
+      <div className="overflow-hidden w-full h-full rounded-lg">
         <img
           src={imgUrls[currentIndex]}
           alt={`Image ${currentIndex + 1}`}
-          className="w-full h-full object-contain"
+          className="w-full h-full object-cover rounded-lg"
         />
       </div>
 
