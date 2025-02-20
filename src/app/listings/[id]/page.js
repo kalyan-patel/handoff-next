@@ -91,10 +91,10 @@ export default function ListingDetails() {
           Listed by: {listing.userDisplayName || "Unknown Seller"}
         </p>
 
-        <p className="text-2xl font-medium text-blue-500">
+        <p className="text-2xl font-medium text-blue-500 mt-3">
           {listing.resolved ? "SOLD" : `$${listing.price}`}
         </p>
-
+        
         <p className="text-lg text-gray-500 mt-4">
           {listing.resolved
             ? "This item has been marked as SOLD by the owner"

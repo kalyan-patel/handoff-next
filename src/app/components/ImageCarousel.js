@@ -18,7 +18,7 @@ export default function ImageCarousel({ imgUrls }) {
   };
 
   return (
-    <div className="relative w-full h-80 md:h-96 lg:h-[32rem] rounded-3xl bg-gradient-to-b from-purple-500 via-indigo-400 to-blue-300">
+    <div className="relative h-80 md:h-96 lg:h-[32rem] rounded-3xl bg-gradient-to-b from-purple-500 via-indigo-400 to-blue-300">
       <div className="overflow-hidden w-full h-full rounded-xl md:rounded-2xl">
         <img
           src={imgUrls[currentIndex]}
