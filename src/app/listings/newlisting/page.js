@@ -71,8 +71,8 @@ export default function NewListing() {
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gray-100 p-4">
-      <div className="w-full max-w-lg bg-white shadow-md rounded-lg p-6">
+    <div className="py-16 flex justify-center items-center">
+      <div className="w-full max-w-lg bg-white border rounded-lg p-6">
         <h2 className="text-3xl font-medium mb-4 text-center">Add a Listing</h2>
         {error && (
           <div className="bg-red-100 text-red-700 p-2 rounded mb-4">{error}</div>
