@@ -3,24 +3,14 @@
 import { useAuth } from "../contexts/AuthContext";
 import { useRouter } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
-import { FiInbox, FiPlusSquare, FiUser } from "react-icons/fi";
-import { FaHandshake } from "react-icons/fa";
+import { FaBars, FaHandshake } from "react-icons/fa";
 
 export default function Navbar() {
   const { currentUser, logout } = useAuth();
   const router = useRouter();
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.matchMedia("(max-width: 767px)").matches);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.matchMedia("(max-width: 767px)").matches);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -42,59 +32,80 @@ export default function Navbar() {
     }
   };
 
+  const handleNavigation = (path) => {
+    router.push(path);
+    setMobileMenuOpen(false);
+  };
+
   return (
     <nav className="sticky top-0 w-full h-28 bg-white shadow-sm flex items-center justify-between px-4 z-50">
       {/* Logo */}
       <button
-        onClick={() => router.push("/")}
-        className={`font-bold text-blue-500 focus:outline-none flex items-center gap-2 ${
-          isMobile ? "text-3xl ml-4" : "text-3xl md:ml-10 lg:ml-20"
-        }`}
+        onClick={() => handleNavigation("/")}
+        className="font-bold text-blue-400 text-3xl flex items-center gap-2 ml-4 md:ml-10 lg:ml-20"
       >
-        {!isMobile && <FaHandshake className="w-14 h-14 mt-1 ml-2 mr-1 text-blue-500" />}
-        {isMobile ? "Handoff" : " Tufts Handoff"}
+        <FaHandshake className="w-14 h-14 mt-1 text-blue-400" />
+        Tufts Handoff
       </button>
 
-      {/* Action Buttons */}
-      <div className={`flex items-center ${isMobile ? "space-x-3" : "space-x-6 md:space-x-8 md:mr-12"}`}>
-        {/* Messages Button */}
-        <button
-          onClick={() => router.push("/chat")}
-          className={`focus:outline-none ${isMobile ? "p-2 bg-blue-400 rounded-full hover:bg-blue-500" : "text-gray-500 text-lg opacity-90 hover:text-indigo-700"}`}
-          aria-label="Messages"
-        >
-          {isMobile ? <FiInbox className="w-6 h-6 text-white" /> : "Your Messages"}
-        </button>
+      {/* Mobile Menu Toggle */}
+      <button
+        className="md:hidden p-2 text-gray-400 focus:outline-none"
+        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        aria-label="Toggle menu"
+      >
+        <FaBars className="w-8 h-8" />
+      </button>
 
-        {/* Create Listing Button */}
-        <button
-          onClick={() => router.push("/listings/newlisting")}
-          className={`focus:outline-none ${isMobile ? "p-2 bg-blue-400 rounded-full hover:bg-blue-500 text-white" : "text-gray-500 text-lg opacity-90 hover:text-indigo-700"}`}
-          aria-label="Create New Listing"
-        >
-          {isMobile ? <FiPlusSquare className="w-6 h-6" /> : "Add a Listing"}
-        </button>
+      {/* Full-Screen Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 bg-white bg-opacity-95 flex flex-col items-center justify-center transition-opacity duration-300 ease-in-out">
+          <button onClick={() => setMobileMenuOpen(false)} className="absolute top-5 right-5 text-2xl text-gray-500">✕</button>
+          <button onClick={() => handleNavigation("/chat")} className="py-4 text-xl w-full text-center text-gray-500 hover:bg-gray-100">Your Messages</button>
+          <button onClick={() => handleNavigation("/listings/newlisting")} className="py-4 text-xl w-full text-center text-gray-500 hover:bg-gray-100">Add a Listing</button>
+          {currentUser ? (
+            <>
+              <button
+                onClick={() => handleNavigation("/listings/mylistings")}
+                className="py-4 text-xl w-full text-center text-gray-500 hover:bg-gray-100"
+              >
+                My Listings
+              </button>
+              <button
+                onClick={() => { handleLogout(); setMobileMenuOpen(false); }}
+                className="py-4 text-xl w-full text-center text-red-500 hover:bg-red-100"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <button onClick={() => handleNavigation("/login")} className="py-4 text-xl w-full text-center text-gray-500 hover:bg-gray-100">Login/Signup</button>
+          )}
+        </div>
+      )}
 
-        {/* Profile Section */}
+      {/* Desktop Menu */}
+      <div className="hidden md:flex items-center space-x-6 md:mr-12 lg:mr-20">
+        <button onClick={() => handleNavigation("/chat")} className="text-gray-600 text-lg hover:text-indigo-700">Your Messages</button>
+        <button onClick={() => handleNavigation("/listings/newlisting")} className="text-gray-600 text-lg hover:text-indigo-700">Add a Listing</button>
         {currentUser ? (
           <div className="relative" ref={dropdownRef}>
             <button
               onClick={() => setDropdownOpen(!dropdownOpen)}
-              className="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 focus:outline-none flex items-center"
+              className="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 focus:outline-none"
             >
-              <span className="mr-2 hidden md:block">{currentUser.displayName || "Anonymous"}</span>
-              <FiUser className="w-5 h-5" />
+              {currentUser.displayName || "Anonymous"}
             </button>
             {dropdownOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg overflow-hidden">
                 <button
-                  onClick={() => router.push("/listings/mylistings")}
-                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  onClick={() => handleNavigation("/listings/mylistings")}
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-600 hover:bg-gray-100"
                 >
                   My Listings
                 </button>
                 <button
-                  onClick={handleLogout}
+                  onClick={() => { handleLogout(); setMobileMenuOpen(false); }}
                   className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-100"
                 >
                   Logout
@@ -104,10 +115,10 @@ export default function Navbar() {
           </div>
         ) : (
           <button
-            onClick={() => router.push("/login")}
+            onClick={() => handleNavigation("/login")}
             className="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 focus:outline-none"
           >
-            {"Login" + (isMobile ? "" : "/Signup")}
+            Login/Signup
           </button>
         )}
       </div>
