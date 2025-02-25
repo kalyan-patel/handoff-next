@@ -106,6 +106,7 @@ export default function NewListing() {
           </div>
           <div>
             <label className="block text-gray-700 font-medium">Upload Images (Max 4)</label>
+            <p className="text-sm text-gray-400">If you're on mobile, first take the photos with your camera app</p>
             <input
               type="file"
               multiple
