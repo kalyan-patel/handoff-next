@@ -7,10 +7,6 @@ export default {
   ],
   theme: {
     extend: {
-      colors: {
-        background: "#ffffff",
-        foreground: "#000000",
-      },
       screens: {
         sm: '640px',  // Small screens (default in Tailwind)
         md: '768px',  // Medium screens
@@ -20,6 +16,5 @@ export default {
       },
     },
   },
-  darkMode: "media",
   plugins: [],
 };

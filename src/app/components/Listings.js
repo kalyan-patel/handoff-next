@@ -30,7 +30,7 @@ const Listings = () => {
   }, []);
 
   if (loading) {
-    return <p className="text-center text-lg mt-6 font-semibold">Loading listings...</p>;
+    return <p className="text-center text-3xl p-36 font-semibold">Loading...</p>;
   }
 
   if (error) {

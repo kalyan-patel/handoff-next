@@ -2,8 +2,8 @@
 
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from '../../contexts/AuthContext';
-import { uploadToS3 } from '../../../../lib/aws'
+import { useAuth } from "../../contexts/AuthContext";
+import { uploadToS3 } from "../../../../lib/aws";
 
 export default function NewListing() {
   const titleRef = useRef();
@@ -20,7 +20,7 @@ export default function NewListing() {
   const router = useRouter();
 
   const handleImageUpload = (e) => {
-    const files = Array.from(e.target.files).slice(0, 4); // Limit to 4 files
+    const files = Array.from(e.target.files).slice(0, 4);
     const filePreviews = files.map((file) => URL.createObjectURL(file));
     setImages(filePreviews);
   };
@@ -33,7 +33,7 @@ export default function NewListing() {
     e.preventDefault();
     setLoading(true);
     setError("");
-  
+
     try {
       const uploadedImageUrls = [];
       for (let i = 0; i < Math.min(imgRef.current.files.length, 4); i++) {
@@ -41,7 +41,7 @@ export default function NewListing() {
         const imageUrl = await uploadToS3(file);
         uploadedImageUrls.push(imageUrl);
       }
-  
+
       const listingData = {
         title: titleRef.current.value,
         description: descRef.current.value,
@@ -51,17 +51,17 @@ export default function NewListing() {
         imgUrls: uploadedImageUrls,
         thumbnailUrl: uploadedImageUrls[thumbnailIndex],
       };
-  
+
       const response = await fetch("/api/listings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(listingData),
       });
-  
+
       if (!response.ok) {
         throw new Error("Failed to create the listing.");
       }
-  
+
       router.push("/");
     } catch (err) {
       setError("Failed to create listing. Please try again.");
@@ -71,59 +71,42 @@ export default function NewListing() {
   };
 
   return (
-    <div className="py-16 flex justify-center items-center">
-      <div className="w-full max-w-lg bg-white border rounded-lg p-6">
-        <h2 className="text-3xl font-medium mb-4 text-center">Add a Listing</h2>
-        {error && (
-          <div className="bg-red-100 text-red-700 p-2 rounded mb-4">{error}</div>
-        )}
-        <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="flex justify-center items-center h-[calc(100dvh-7rem)] p-3">
+      <div className="w-full max-w-md bg-white shadow-md border rounded-xl p-6">
+        <h2 className="text-3xl font-semibold text-center mb-4 text-gray-800">Add a Listing</h2>
+        {error && <div className="bg-red-100 text-red-700 p-2 rounded mb-4 text-center">{error}</div>}
+        <form onSubmit={handleSubmit} className="space-y-4 text-md">
           <div>
-            <label htmlFor="title" className="block font-medium mb-1">
-              Title
-            </label>
+            <label className="block text-gray-700 font-medium">Title</label>
             <input
-              id="title"
               type="text"
-              name="title"
               ref={titleRef}
               required
-              className="w-full p-2 border rounded"
+              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div>
-            <label htmlFor="description" className="block font-medium mb-1">
-              Description
-            </label>
+            <label className="block text-gray-700 font-medium">Description</label>
             <textarea
-              id="description"
-              name="description"
               ref={descRef}
               required
               rows="3"
-              className="w-full p-2 border rounded"
+              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             ></textarea>
           </div>
           <div>
-            <label htmlFor="price" className="block font-medium mb-1">
-              Price
-            </label>
+            <label className="block text-gray-700 font-medium">Price ($)</label>
             <input
-              id="price"
               type="number"
-              name="price"
               ref={priceRef}
               required
               max="10000"
-              className="w-full p-2 border rounded"
+              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div>
-            <label htmlFor="images" className="block font-medium mb-1">
-              Upload Images (Max 4)
-            </label>
+            <label className="block text-gray-700 font-medium">Upload Images (Max 4)</label>
             <input
-              id="images"
               type="file"
               multiple
               accept="image/*"
@@ -136,16 +119,10 @@ export default function NewListing() {
                 <div
                   key={index}
                   className={`relative w-20 h-20 border rounded-lg overflow-hidden ${
-                    thumbnailIndex === index
-                      ? "border-blue-500"
-                      : "border-gray-300"
+                    thumbnailIndex === index ? "border-blue-500" : "border-gray-300"
                   }`}
                 >
-                  <img
-                    src={src}
-                    alt={`Preview ${index + 1}`}
-                    className="w-full h-full object-cover"
-                  />
+                  <img src={src} alt={`Preview ${index + 1}`} className="w-full h-full object-cover" />
                   <button
                     type="button"
                     className="absolute bottom-0 left-0 w-full bg-gray-800 text-white text-sm py-1"
@@ -160,7 +137,7 @@ export default function NewListing() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600"
+            className="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-200"
           >
             {loading ? "Creating..." : "Create Listing"}
           </button>

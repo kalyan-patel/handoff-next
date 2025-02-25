@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
-import { Card, Form, Button, Container, Alert } from "react-bootstrap";
+import { useRef, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -20,8 +19,7 @@ export default function Signup() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    
-    // Check for Tufts email
+
     if (!emailRef.current.value.endsWith("@tufts.edu")) {
       return setError("You must use a Tufts email address");
     }
@@ -39,18 +37,16 @@ export default function Signup() {
       setSuccess("");
       setLoading(true);
 
-      // Sign up user
       const userCredential = await signup(
         emailRef.current.value,
         passwordRef.current.value,
         nameRef.current.value
       );
 
-      // Send verification email
       const auth = getAuth();
       await sendEmailVerification(auth.currentUser);
 
-      setSuccess("Sign-up successful! Please check your email for a verification link.");
+      setSuccess("Sign-up successful! Check your email for a verification link.");
     } catch (error) {
       setError(error.message || "Failed to create account");
     } finally {
@@ -59,47 +55,60 @@ export default function Signup() {
   }
 
   return (
-    <Container
-      className="d-flex align-items-center justify-content-center"
-      style={{ minHeight: "90vh" }}
-    >
-      <div className="w-100" style={{ maxWidth: "400px" }}>
-        <Card>
-          <Card.Body>
-            <h2 className="text-center mb-4 text-3xl font-medium">Sign Up</h2>
-            {error && <Alert variant="danger">{error}</Alert>}
-            {success && <Alert variant="success">{success}</Alert>}
-            <Form onSubmit={handleSubmit}>
-              <Form.Group id="name" className="mb-2">
-                <Form.Label>First name / Username</Form.Label>
-                <Form.Control type="text" ref={nameRef} required />
-              </Form.Group>
-              <Form.Group id="email" className="mb-2">
-                <Form.Label>Tufts Email</Form.Label>
-                <Form.Control type="email" ref={emailRef} required />
-              </Form.Group>
-              <Form.Group id="password" className="mb-2">
-                <Form.Label>Password</Form.Label>
-                <Form.Control type="password" ref={passwordRef} required />
-              </Form.Group>
-              <Form.Group id="password-confirm" className="mb-2">
-                <Form.Label>Confirm Password</Form.Label>
-                <Form.Control type="password" ref={passwordConfirmRef} required />
-              </Form.Group>
-              <Button disabled={loading} className="w-100 mt-3" type="submit">
-                Sign Up
-              </Button>
-            </Form>
-          </Card.Body>
-        </Card>
-        <div className="w-100 text-center mt-2">
-          Already have an account? <Link href="/login" className="text-blue-500 underline">Log In</Link>
+    <div className="flex justify-center items-center h-[calc(100dvh-7rem)] p-3">
+      <div className="w-full max-w-md bg-white shadow-md border rounded-xl p-6">
+        <h2 className="text-3xl font-semibold text-center mb-4 text-gray-800">Sign Up</h2>
+        {error && <div className="bg-red-100 text-red-700 p-2 rounded mb-4 text-center">{error}</div>}
+        {success && <div className="bg-green-100 text-green-700 p-2 rounded mb-4 text-center">{success}</div>}
+        <form onSubmit={handleSubmit} className="space-y-4 text-md">
+          <div>
+            <label className="block text-gray-700 font-medium">First Name / Username</label>
+            <input
+              type="text"
+              ref={nameRef}
+              required
+              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 font-medium">Tufts Email</label>
+            <input
+              type="email"
+              ref={emailRef}
+              required
+              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 font-medium">Password</label>
+            <input
+              type="password"
+              ref={passwordRef}
+              required
+              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 font-medium">Confirm Password</label>
+            <input
+              type="password"
+              ref={passwordConfirmRef}
+              required
+              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-200"
+          >
+            {loading ? "Signing up..." : "Sign Up"}
+          </button>
+        </form>
+        <div className="text-center mt-4 text-gray-600">
+          Already have an account? <Link href="/login" className="text-blue-500 font-medium hover:underline">Log In</Link>
         </div>
       </div>
-    </Container>
+    </div>
   );
 }
-
-
-
-

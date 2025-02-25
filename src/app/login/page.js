@@ -1,12 +1,9 @@
 "use client";
 
-import React, { useRef, useState } from 'react'
-import { Card, Form, Button, Container, Alert } from 'react-bootstrap'
-import { useAuth } from '../contexts/AuthContext'
-
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-
+import { useRef, useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function Login() {
   const emailRef = useRef();
@@ -23,41 +20,56 @@ export default function Login() {
       setError("");
       setLoading(true);
       await login(emailRef.current.value, passwordRef.current.value);
-      router.push("/")
+      router.push("/");
     } catch {
-      setError("Failed to sign in")
+      setError("Failed to sign in.");
     }
 
     setLoading(false);
   }
 
-
   return (
-    <>
-      <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "90vh" }}>
-        <div className="w-100" style={{ maxWidth: '400px' }}>
-          <Card>
-            <Card.Body>
-              <h2 className="text-center mb-4 text-3xl font-medium">Log In</h2>
-              {error && <Alert variant='danger'>{error}</Alert>}
-              <Form onSubmit={handleSubmit}>
-                <Form.Group id="email" className="mb-2">
-                  <Form.Label>Tufts Email</Form.Label>
-                  <Form.Control type="email" ref={emailRef} required />
-                </Form.Group>
-                <Form.Group id="password" className="mb-2">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control type="password" ref={passwordRef} required />
-                </Form.Group>
-                <Button disabled={loading} className="w-100 mt-2" type="submit">Log In</Button>
-              </Form>
-            </Card.Body>
-          </Card>
-          <div className="w-100 text-center mt-2">
-            Need an account? <Link href="/signup" className="text-blue-500 underline">Sign Up</Link>
+    <div className="flex justify-center items-center h-[calc(100dvh-7rem)] p-3">
+      <div className="w-full max-w-md bg-white shadow-md border rounded-xl p-6">
+        <h2 className="text-3xl font-semibold text-center mb-4 text-gray-800">Log In</h2>
+        {error && <div className="bg-red-100 text-red-700 p-2 rounded mb-4 text-center">{error}</div>}
+        <form onSubmit={handleSubmit} className="space-y-4 text-md">
+          <div>
+            <label htmlFor="email" className="block text-gray-700 font-medium">
+              Tufts Email
+            </label>
+            <input
+              id="email"
+              type="email"
+              ref={emailRef}
+              required
+              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
           </div>
+          <div>
+            <label htmlFor="password" className="block text-gray-700 font-medium">
+              Password
+            </label>
+            <input
+              id="password"
+              type="password"
+              ref={passwordRef}
+              required
+              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-200"
+          >
+            {loading ? "Logging in..." : "Log In"}
+          </button>
+        </form>
+        <div className="text-center mt-4 text-gray-600">
+          Need an account? <Link href="/signup" className="text-blue-500 font-medium hover:underline">Sign Up</Link>
         </div>
-      </Container>
-    </>
+      </div>
+    </div>
   );
 }

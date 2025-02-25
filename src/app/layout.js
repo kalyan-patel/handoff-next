@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "Tufts Handoff",
-  description: "Buy and sell furniture, clothes, and much more!",
+  description: "Buy and sell clothes, furniture, and much more!",
 };
 
 export default function RootLayout({ children }) {
@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
       >
         <AuthProvider>
           <Navbar/>
-          <main className="bg-gray-50">
+          <main className="bg-stone-50">
             {children}
           </main>
         </AuthProvider>
