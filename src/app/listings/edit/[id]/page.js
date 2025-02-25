@@ -146,7 +146,7 @@ export default function EditListing({ params }) {
   if (!listingData) return <div>Loading...</div>;
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gray-100 p-4">
+    <div className="min-h-screen flex justify-center items-center p-4">
       <div className="w-full max-w-lg bg-white shadow-md rounded-lg p-6">
         <h2 className="text-2xl font-bold mb-4 text-center">Edit Listing</h2>
         {error && (
