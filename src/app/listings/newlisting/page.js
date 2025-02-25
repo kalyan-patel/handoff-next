@@ -71,7 +71,7 @@ export default function NewListing() {
   };
 
   return (
-    <div className="flex justify-center items-center h-[calc(100dvh-7rem)] p-3">
+    <div className="flex justify-center items-center min-h-[calc(100dvh-7rem)] p-3">
       <div className="w-full max-w-md bg-white shadow-md border rounded-xl p-6">
         <h2 className="text-3xl font-semibold text-center mb-4 text-gray-800">Add a Listing</h2>
         {error && <div className="bg-red-100 text-red-700 p-2 rounded mb-4 text-center">{error}</div>}
