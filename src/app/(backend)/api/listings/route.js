@@ -21,7 +21,7 @@ export async function GET(req) {
       filter.userEmail = userEmail;
     }
 
-    const listings = await Listing.find(filter).sort({ lastUpdated: -1 });
+    const listings = await Listing.find(filter).sort({ resolved: 1, lastUpdated: -1 });
 
     return new Response(JSON.stringify(listings), {
       status: 200,
