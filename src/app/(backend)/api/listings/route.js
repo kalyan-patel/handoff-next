@@ -2,12 +2,27 @@ import connectToDB from '../../../../../lib/mongoose';
 import Listing from '../../../../../models/Listing';
 import { NextResponse } from 'next/server';
 
-
-// GET: Fetch all listings for the homepage
-export async function GET() {
+// GET: Fetch all listings for the homepage with optional search filters
+export async function GET(req) {
   try {
     await connectToDB();
-    const listings = await Listing.find({ deleted: { $ne: true } }).sort({ lastUpdated: -1 })
+
+    // Extract search parameters
+    const { searchParams } = new URL(req.url);
+    const title = searchParams.get("title");
+    const userEmail = searchParams.get("user");
+
+    // Construct filter query
+    let filter = { deleted: { $ne: true } };
+    if (title) {
+      filter.title = { $regex: title, $options: "i" }; // Case-insensitive search
+    }
+    if (userEmail) {
+      filter.userEmail = userEmail;
+    }
+
+    const listings = await Listing.find(filter).sort({ lastUpdated: -1 });
+
     return new Response(JSON.stringify(listings), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },

@@ -5,15 +5,10 @@ import Listing from '../../../../../../models/Listing';
 // GET: Fetch a listing by ID
 export async function GET(req, { params }) {
   try {
-    console.log("IN THE GET REQUEST");
-
     await connectToDB();
 
-    const { id } = params;
+    const { id } = await params;
     const listing = await Listing.findById(id);
-
-    console.log("LISTING FROM INSIDE THE GET REQ");
-    console.log(listing);
 
     if (!listing) {
       return NextResponse.json({ error: 'Listing not found' }, { status: 404 });
