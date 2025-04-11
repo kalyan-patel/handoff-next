@@ -19,6 +19,7 @@
     "formidable": "^3.5.2",
     "mongoose": "^8.9.2",
     "next": "15.1.2",
+    "nodemailer": "^6.10.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.7",
     "react-dom": "^18.2.0",

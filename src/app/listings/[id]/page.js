@@ -58,6 +58,28 @@ export default function ListingDetails() {
         throw new Error("Failed to start conversation");
       }
 
+      await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          to: listing.userEmail,
+          subject: `Someone is interested in ${listing.title}!`,
+          text:
+`Hi ${listing.userDisplayName},
+
+${currentUser.displayName} is interested in "${listing.title}" and sent you a message: 
+          
+Message: ${message}
+
+
+—
+Handoff Team
+https://handoff.shop
+You received this email because someone contacted you via your listing.
+`
+        }),
+      })
+
       router.push(`/chat`);
     } catch (error) {
       console.error("Error starting conversation:", error);
