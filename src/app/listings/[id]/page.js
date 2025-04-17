@@ -64,21 +64,38 @@ export default function ListingDetails() {
         body: JSON.stringify({
           to: listing.userEmail,
           subject: `Someone is interested in ${listing.title}!`,
-          text:
+          text: 
 `Hi ${listing.userDisplayName},
 
-${currentUser.displayName} is interested in "${listing.title}" and sent you a message: 
-          
-Message: ${message}
+${currentUser.displayName} is interested in your listing "${listing.title}" and sent you a message:
 
+"${message}"
+
+Visit https://handoff.shop/chat to reply.
 
 —
 Handoff Team
 https://handoff.shop
 You received this email because someone contacted you via your listing.
-`
+To stop receiving these emails, reply with "unsubscribe".`.trim(),
+          html: `
+            <p>Hi ${listing.userDisplayName},</p>
+            <p><strong>${currentUser.displayName}</strong> is interested in your listing <strong>"${listing.title}"</strong> and sent you the following message:</p>
+            <blockquote style="margin: 1em 0; padding: 0.5em 1em; background: #f9f9f9; border-left: 4px solid #ccc;">
+              ${message}
+            </blockquote>
+            <p><a href="https://handoff.shop/chat" target="_blank">Click here to view and reply to the message</a></p>
+            <hr />
+            <p style="font-size: 0.9em; color: #777;">
+              You received this email because someone contacted you via your listing on <a href="https://handoff.shop">handoff.shop</a>.<br />
+              To stop receiving emails, reply with "unsubscribe".
+            </p>
+          `.trim(),
+          headers: {
+            'List-Unsubscribe': '<mailto:unsubscribe@handoff.shop>',
+          },
         }),
-      })
+      });
 
       router.push(`/chat`);
     } catch (error) {
