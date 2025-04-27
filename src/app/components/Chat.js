@@ -114,9 +114,8 @@ export const Chat = () => {
 
   return (
     <div className="h-[calc(100dvh-7rem)]">
-      {/* Main Container */}
       <MainContainer  className="flex-grow overflow-hidden">
-        <Sidebar position="left" scrollable style={showSidebar ? {display: "flex", flexBasis: "auto", width: "100%", maxWidth: "100%"} : (isMobile ? {display: "none"} : {})} className=" p-2">
+        <Sidebar position="left" scrollable style={showSidebar ? {display: "flex", flexBasis: "auto", width: "100%", maxWidth: "100%"} : (isMobile ? {display: "none"} : {})} className="p-2">
           <ConversationHeader className="mb-2 bg-transparent">
             <ConversationHeader.Content className="text-2xl font-bold">
               Messages:
@@ -137,7 +136,7 @@ export const Chat = () => {
                   info={<span className="text-sm text-gray-500">{lastMessage}</span>}
                   active={activeConversation?._id === c._id}
                   onClick={() => handleConversationClick(c)}
-                  className="hover:bg-gray-200 rounded-md p-3 cursor-pointer mb-1"
+                  className="hover:bg-gray-200 rounded-none p-3 cursor-pointer"
                 >
                 </Conversation>
               );

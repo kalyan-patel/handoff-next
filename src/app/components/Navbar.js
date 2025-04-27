@@ -45,7 +45,7 @@ export default function Navbar() {
         className="font-bold text-blue-400 text-3xl flex items-center gap-2 ml-4 md:ml-10 lg:ml-20"
       >
         <FaHandshake className="w-14 h-14 mt-1 text-blue-400" />
-        Tufts Handoff
+        Handoff
       </button>
 
       {/* Mobile Menu Toggle */}
