@@ -86,8 +86,8 @@ export default function Navbar() {
 
       {/* Desktop Menu */}
       <div className="hidden md:flex items-center space-x-6 md:mr-12 lg:mr-20">
-        <button onClick={() => handleNavigation("/chat")} className="text-gray-600 text-lg hover:text-indigo-700">Your Messages</button>
-        <button onClick={() => handleNavigation("/listings/newlisting")} className="text-gray-600 text-lg hover:text-indigo-700">Add a Listing</button>
+        <button onClick={() => handleNavigation("/chat")} className="text-gray-600 text-lg hover:text-gray-800">Your Messages</button>
+        <button onClick={() => handleNavigation("/listings/newlisting")} className="text-gray-600 text-lg hover:text-gray-800">Add a Listing</button>
         {currentUser ? (
           <div className="relative" ref={dropdownRef}>
             <button

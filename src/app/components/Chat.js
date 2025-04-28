@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import {
   MainContainer,
   Sidebar,
+  Avatar,
   ConversationHeader,
   ConversationList,
   Conversation,
@@ -115,9 +116,9 @@ export const Chat = () => {
   return (
     <div className="h-[calc(100dvh-7rem)]">
       <MainContainer  className="flex-grow overflow-hidden">
-        <Sidebar position="left" scrollable style={showSidebar ? {display: "flex", flexBasis: "auto", width: "100%", maxWidth: "100%"} : (isMobile ? {display: "none"} : {})} className="p-2">
-          <ConversationHeader className="mb-2 bg-transparent">
-            <ConversationHeader.Content className="text-2xl font-bold">
+        <Sidebar position="left" scrollable style={showSidebar ? {display: "flex", flexBasis: "auto", width: "100%", maxWidth: "100%"} : (isMobile ? {display: "none"} : {})} className="p-1">
+          <ConversationHeader className="mb-1 bg-transparent">
+            <ConversationHeader.Content className="text-lg font-bold">
               Messages:
             </ConversationHeader.Content>
           </ConversationHeader>
@@ -136,8 +137,9 @@ export const Chat = () => {
                   info={<span className="text-sm text-gray-500">{lastMessage}</span>}
                   active={activeConversation?._id === c._id}
                   onClick={() => handleConversationClick(c)}
-                  className="hover:bg-gray-200 rounded-none p-3 cursor-pointer"
+                  className="hover:bg-gray-200 rounded-md p-3 cursor-pointer"
                 >
+                  <Avatar src="/default.jpg"/>
                 </Conversation>
               );
             })}
@@ -148,7 +150,8 @@ export const Chat = () => {
           {activeConversation && (
             <ConversationHeader className="border-b p-3">
               {isMobile ? <ConversationHeader.Back onClick={handleBackClick}/> : null}
-              <ConversationHeader.Content className="text-lg font-bold pl-3"
+              <Avatar src="/default.jpg" className="mt-2"/>
+              <ConversationHeader.Content className="text-lg font-bold"
                 userName={(activeConversation.userDisplayNames[(activeConversation.userEmails.indexOf(currentUser.email) + 1) % 2])}
                 info={activeConversation.topic}
               />
