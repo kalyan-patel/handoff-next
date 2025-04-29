@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Tufts Handoff",
+  title: "Handoff",
   description: "Buy and sell clothes, furniture, and much more!",
 };
 
