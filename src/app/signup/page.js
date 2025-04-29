@@ -20,9 +20,10 @@ export default function Signup() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    if (!emailRef.current.value.endsWith("@tufts.edu")) {
-      return setError("You must use a Tufts email address");
-    }
+    // REMOVE THIS TO MAKE IT SO THAT ANYONE CAN MAKE AN ACCOUNT
+    // if (!emailRef.current.value.endsWith("@tufts.edu")) {
+    //   return setError("You must use a Tufts email address");
+    // }
 
     if (nameRef.current.value.length > 12) {
       return setError("Name must be 12 characters or less");
