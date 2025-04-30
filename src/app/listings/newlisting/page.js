@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../../contexts/AuthContext";
 import { uploadToS3 } from "../../../../lib/aws";
+import heic2any from "heic2any";
 
 export default function NewListing() {
   const titleRef = useRef();
@@ -14,15 +15,45 @@ export default function NewListing() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [images, setImages] = useState([]);
+  const [processedFiles, setProcessedFiles] = useState([]); // ✅ state for converted files
   const [thumbnailIndex, setThumbnailIndex] = useState(0);
   const { currentUser } = useAuth();
 
   const router = useRouter();
 
-  const handleImageUpload = (e) => {
+  const handleImageUpload = async (e) => {
     const files = Array.from(e.target.files).slice(0, 4);
-    const filePreviews = files.map((file) => URL.createObjectURL(file));
-    setImages(filePreviews);
+    const processed = [];
+
+    for (const file of files) {
+      let finalFile = file;
+
+      if (file.type === "image/heic" || file.name.toLowerCase().endsWith(".heic")) {
+        console.log("THIS IS A HEIC I WILL TRY TO CONVERT IT");
+        try {
+          const convertedBlob = await heic2any({
+            blob: file,
+            toType: "image/jpeg",
+            quality: 0.9,
+          });
+
+          finalFile = new File(
+            [convertedBlob],
+            file.name.replace(/\.heic$/i, ".jpg"),
+            { type: "image/jpeg" }
+          );
+          console.log(`Converted HEIC to JPEG: ${finalFile.name}`);
+        } catch (err) {
+          console.error("HEIC to JPEG conversion failed:", err);
+          continue;
+        }
+      }
+
+      processed.push(finalFile);
+    }
+
+    setProcessedFiles(processed); // ✅ store for later upload
+    setImages(processed.map((file) => URL.createObjectURL(file)));
   };
 
   const handleThumbnailSelect = (index) => {
@@ -36,8 +67,8 @@ export default function NewListing() {
 
     try {
       const uploadedImageUrls = [];
-      for (let i = 0; i < Math.min(imgRef.current.files.length, 4); i++) {
-        const file = imgRef.current.files[i];
+      for (let i = 0; i < Math.min(processedFiles.length, 4); i++) {
+        const file = processedFiles[i];
         const imageUrl = await uploadToS3(file);
         uploadedImageUrls.push(imageUrl);
       }

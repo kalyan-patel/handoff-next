@@ -1,39 +1,21 @@
 import { NextResponse } from "next/server";
 import { getPresignedUrl } from "../../../../../../lib/aws";
-import sharp from "sharp";
 
 export async function POST(request) {
   try {
     const formData = await request.formData();
-    const file = formData.get("file"); // Get file from request
+    const file = formData.get("file");
 
     if (!file) {
       return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
     }
 
-    let fileBuffer = Buffer.from(await file.arrayBuffer());
-    let fileType = file.type;
-    let fileName = file.name;
+    const fileBuffer = Buffer.from(await file.arrayBuffer());
+    const fileType = file.type;
+    const fileName = file.name;
 
-    console.log(fileType)
-    console.log(fileName)
-
-    // Convert HEIC to JPEG
-    if (fileType === "image/heic" || fileName.endsWith(".heic")) {
-      try {
-        fileBuffer = await sharp(fileBuffer).toFormat("jpeg").toBuffer();
-        fileType = "image/jpeg";
-        fileName = fileName.replace(".heic", ".jpg");
-      } catch (error) {
-        console.error("HEIC conversion failed:", error);
-        return NextResponse.json({ error: "HEIC conversion failed" }, { status: 500 });
-      }
-    }
-
-    // Get S3 pre-signed URL
     const { url, key } = await getPresignedUrl(fileName, fileType);
 
-    // Upload the converted file to S3
     await fetch(url, {
       method: "PUT",
       headers: { "Content-Type": fileType },
