@@ -146,7 +146,7 @@ To stop receiving these emails, reply with "unsubscribe".`.trim(),
         {isOwner ? (
           <button
             onClick={() => router.push(`/listings/edit/${id}`)}
-            className="bg-blue-500 text-white py-3 w-full text-lg rounded hover:bg-blue-600"
+            className="bg-violet-500 text-white py-3 w-full text-lg rounded hover:bg-violet-600"
           >
             Edit Listing
           </button>
@@ -154,7 +154,7 @@ To stop receiving these emails, reply with "unsubscribe".`.trim(),
           !listing.resolved && (
             <button
               onClick={() => setIsModalOpen(true)}
-              className="bg-purple-500 text-white py-3 w-full text-lg rounded hover:bg-purple-600 disabled:bg-gray-400"
+              className="bg-blue-500 text-white py-3 w-full text-lg rounded hover:bg-blue-600 disabled:bg-gray-400"
               disabled={loading}
             >
               {loading ? "Messaging..." : "Message Owner"}
@@ -184,7 +184,7 @@ To stop receiving these emails, reply with "unsubscribe".`.trim(),
               </button>
               <button
                 onClick={handleSendMessage}
-                className="bg-purple-500 text-white py-2 px-4 rounded hover:bg-purple-600 disabled:bg-gray-400"
+                className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 disabled:bg-gray-400"
                 disabled={loading}
               >
                 Send

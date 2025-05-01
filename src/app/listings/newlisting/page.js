@@ -4,7 +4,6 @@ import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../../contexts/AuthContext";
 import { uploadToS3 } from "../../../../lib/aws";
-import heic2any from "heic2any";
 
 export default function NewListing() {
   const titleRef = useRef();
@@ -15,7 +14,7 @@ export default function NewListing() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [images, setImages] = useState([]);
-  const [processedFiles, setProcessedFiles] = useState([]); // ✅ state for converted files
+  const [processedFiles, setProcessedFiles] = useState([]);
   const [thumbnailIndex, setThumbnailIndex] = useState(0);
   const { currentUser } = useAuth();
 
@@ -23,37 +22,8 @@ export default function NewListing() {
 
   const handleImageUpload = async (e) => {
     const files = Array.from(e.target.files).slice(0, 4);
-    const processed = [];
-
-    for (const file of files) {
-      let finalFile = file;
-
-      if (file.type === "image/heic" || file.name.toLowerCase().endsWith(".heic")) {
-        console.log("THIS IS A HEIC I WILL TRY TO CONVERT IT");
-        try {
-          const convertedBlob = await heic2any({
-            blob: file,
-            toType: "image/jpeg",
-            quality: 0.9,
-          });
-
-          finalFile = new File(
-            [convertedBlob],
-            file.name.replace(/\.heic$/i, ".jpg"),
-            { type: "image/jpeg" }
-          );
-          console.log(`Converted HEIC to JPEG: ${finalFile.name}`);
-        } catch (err) {
-          console.error("HEIC to JPEG conversion failed:", err);
-          continue;
-        }
-      }
-
-      processed.push(finalFile);
-    }
-
-    setProcessedFiles(processed); // ✅ store for later upload
-    setImages(processed.map((file) => URL.createObjectURL(file)));
+    setProcessedFiles(files);
+    setImages(files.map((file) => URL.createObjectURL(file)));
   };
 
   const handleThumbnailSelect = (index) => {
@@ -89,10 +59,7 @@ export default function NewListing() {
         body: JSON.stringify(listingData),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to create the listing.");
-      }
-
+      if (!response.ok) throw new Error("Failed to create the listing.");
       router.push("/");
     } catch (err) {
       setError("Failed to create listing. Please try again.");
