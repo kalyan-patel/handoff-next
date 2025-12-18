@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 
 export default function CardSpyPage() {
 	const [player, setPlayer] = useState("");
@@ -9,6 +8,21 @@ export default function CardSpyPage() {
 	const [deck, setDeck] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
+
+	// WAKE UP THE API HOSTED ON RENDER FREE TIER
+	useEffect(() => {
+		console.log("Waking up api")
+		fetch("https://cardspy-api.onrender.com/deck", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({
+				player: "__wakeup__",
+				clan: "__wakeup__",
+			}),
+		}).catch(() => {
+			// ignored
+		});
+	}, []);
 
 	async function fetchDeck() {
 		setLoading(true);
@@ -19,7 +33,7 @@ export default function CardSpyPage() {
 			const res = await fetch("https://cardspy-api.onrender.com/deck", {
 				method: "POST",
 				headers: {
-				"Content-Type": "application/json",
+					"Content-Type": "application/json",
 				},
 				body: JSON.stringify({
 					player,
