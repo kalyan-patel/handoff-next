@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <AuthProvider>
-          <Navbar/>
+          {/* <Navbar/> */}
           <main className="bg-stone-50">
             {children}
           </main>
